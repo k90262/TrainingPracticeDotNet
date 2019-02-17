@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+
+    <script>
+
+        $(function () {
+
+            $("#btn").click(function () {
+                var no1 = $("#no1").val();
+                var no2 = $("#no2").val();
+
+                $.getJSON("/api/Add?no1=" + no1 + "&no2=" + no2, function (result) {
+                    $("#ans").text(result);
+                });
+
+            });
+
+        });
+
+    </script>
+
+</head>
+<body>
+    No1: <input type="text" id="no1" /><br />
+    No2: <input type="text" id="no2" /><br />
+    <input type="button" value="計算" id="btn" /><br />
+    Answer = <span id="ans"></span>
+</body>
+</html>

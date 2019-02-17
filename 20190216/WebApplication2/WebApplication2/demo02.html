@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script src="Scripts/jquery.tmpl.min.js"></script>
+    <script type="text/x-jquery-tmpl" id="t1">
+        <tr>
+            <td>${經營主體}</td>
+            <td>${地址}</td>
+            <td>${X}</td>
+            <td>${Y}</td>
+        </tr>
+    </script>
+    <!--issue: https://stackoverflow.com/questions/38487136/globalization-support-in-js-render-template
+    <script src="Scripts/jsrender.min.js"></script>
+    <script type="text/x-jsrender" id="t1">
+        <tr>
+            <td>{{>經營主體}}</td>
+            <td>{{>地址}}</td>
+            <td>{{>X}}</td>
+            <td>{{>Y}}</td>
+        </tr>
+    </script>-->
+    <script>
+
+        $(function () {
+
+            $("#btn").click(function () {
+                $.getJSON("https://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=eb4981e4-a6a5-468c-b17f-544880ebad1e", function (data) {
+                    //alert(data.result.results[0].電話);
+                    //alert($("#t1").tmpl);
+                    $("#t1").tmpl(data.result.results).appendTo("#table1");
+
+                    //var tmpl = $.templates("#t1");
+                    //$(tmpl.render(data.result.results)).appendTo("#table1");
+                });
+            });
+
+        });
+
+    </script>
+
+</head>
+<body>
+    <input type="button" value="取得資料" id="btn" />
+    <hr />
+    <table border="1" id="table1">
+        <tr>
+            <th>經營主體</th>
+            <th>地址</th>
+            <th>X</th>
+            <th>Y</th>
+        </tr>
+
+    </table>
+</body>
+</html>

@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <style>
+        td {
+            width:30px;
+            height:30px;
+        }
+
+        .style1 {
+            background-color: mediumpurple;
+        }
+    </style>
+
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+
+    <script>
+        var id = 0;
+        var duration = 10;
+        var factor = 1.005;
+        var sortedTD;
+        var count = 0;
+        var stopCount = 100;
+
+        function loop() {
+            $(sortedTD[id]).removeClass("style1");
+            id++;
+            if (id >= sortedTD.length) id = 0;
+            $(sortedTD[id]).addClass("style1");
+
+            duration *= factor;
+            factor *= 1.0005;
+
+            count++;
+            if (count < stopCount) setTimeout(loop, duration);
+        }
+
+        var w = 8;
+        var h = 6;
+
+        $(function () {
+
+            for (var y = 0; y < h; y++) {
+                var tr = $("<tr/>").appendTo("#t1");
+                for (var x = 0; x < w; x++) 
+                    $("<td/>").appendTo(tr);
+            }
+
+            $("tr:gt(0):lt(" + (h - 2) + ")")
+                .find("td:gt(0):lt(" + (w - 2) + ")")
+                .remove();
+
+            $("tr:eq(1)").append("<td/>")
+                .find("td:eq(1)")
+                .attr("colspan", w - 2)
+                .attr("rowspan", h - 2)
+                .css("background-color", "yellow");
+
+            $("tr:first td").each(function (i, e) {
+                $(this).text(i + 1);
+            });
+
+            $("tr:last td").each(function (i, e) {
+                $(this).text(2 * w + h - 2 - i);
+            });
+
+            for (var i = 1; i < h - 1; i++) {
+                $("tr:eq(" + i + ") td:first").text(2*w+2*h-4-i+1);
+                $("tr:eq(" + i + ") td:last").text(w+i);
+            }
+
+            sortedTD = $("td")
+                .filter(function () {
+                    return $(this).text() != "";
+                })
+                .sort(function (a, b) {
+                    return parseInt(a.innerText) - parseInt($(b).text());
+                });
+
+            stopCount = Math.random() * 24 + 85;
+            setTimeout(loop, duration);
+
+            
+        });
+
+    </script>
+
+</head>
+<body>
+    <table id="t1" border="1">
+
+    </table>
+</body>
+</html>

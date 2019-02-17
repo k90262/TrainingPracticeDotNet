@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <style>
+        td {
+            width: 30px;
+            height:30px;
+        }
+    </style>
+
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+
+    <script>
+
+        var w = 8;
+        var h = 6;
+
+        $(function () {
+
+            for (var y = 0; y < h; y++) {
+                var tr = $("<tr />").appendTo("#t1");
+                for (var x = 0; x < w; x++) {
+                    var td = $("<td />");
+                    tr.append(td);
+                }
+            }
+            //$("td:gt(15):lt(13)").css("background-color", "pink");
+
+            $("tr:gt(0):lt(" + (h - 2) + ")")
+                .find("td:gt(0):lt(" + (w - 2) + ")")
+                //.css("background-color", "pink");
+                .remove();
+
+            $("#t1 tr:eq(1)").append("<td />").find("td:eq(1)")
+                .attr("colspan", w - 2)
+                .attr("rowspan", h - 2)
+                .css("background-color", "yellow");
+
+            //for (var i = 0; i < w; i++) {
+                //$("td:eq(" + i + ")").text(i + 1);
+                //$("tr:last td:eq("+i+")").text(2*w+h-2-i);
+            //}
+
+            $("tr:first td").each(function (i, e) {
+                $(this).text(i+1);
+            });
+            $("tr:last td").each(function(i, e) {
+                $(this).text(2 * w + h - 2 - i);
+            });
+
+            // try by myself 
+            //for (var hi = 1; hi < h-1; hi++) {
+            //    $("tr:eq("+hi+") td:first").each(function (i, e) {
+            //        if (i == 0) {
+            //            $(this).text(2*w+2*(h-2)-hi+1);
+            //        } 
+            //    });
+            //    $("tr:eq(" + hi + ") td:last").each(function (i, e) {
+            //        if (i == 0) {
+            //            $(this).text(w + hi);
+            //        } 
+            //    });
+            //}
+
+            for (var i = 1; i < h - 1; i++) {
+                $("tr:eq(" + i + ") td:first").text(2 * w + 2 * h - 4 - i + 1);
+                $("tr:eq(" + i + ") td:last").text(w+i);
+            }
+
+            var sortedTD = $("td")
+                .filter(function () {
+                    return $(this).text() != "";
+                })
+                .sort(function (a, b) {
+                    return parseInt($(a).text()) - parseInt($(b).text());
+                })
+                .each(function (i, e) {
+                    $(this).text("No#" + i);
+                });
+
+            var id = 0;
+            setInterval(function () {
+                $(sortedTD[id]).text(new Date());
+                id++;
+                if (id >= sortedTD.length) id = 0;
+            });
+        });
+
+
+        //$(function () {
+        //    var trTop = $("<tr />").appendTo("#t1");
+        //    for (var x = 0; x < w; x++) {
+        //        var td = $("<td></td>");
+        //        trTop.append(td);
+        //    }
+        //    $("<tr><td/><td colspan=" + (w-2) + " rowspan=" + (h-2) + " /><td/></tr>").appendTo("#t1");
+        //    for (var y = 0; y < h - 3;y++){
+        //        var tr = $("<tr><td/><td/></tr>").appendTo("#t1");
+        //    }
+        //    var trBottom = $("<tr />").appendTo("#t1");
+        //    for (var x = 0; x < w; x++) {
+        //        var td = $("<td></td>");
+        //        trBottom.append(td);
+        //    }
+
+
+        //});
+
+    </script>
+
+</head>
+<body>
+    <table id="t1" border="1">
+
+    </table>
+</body>
+</html>
