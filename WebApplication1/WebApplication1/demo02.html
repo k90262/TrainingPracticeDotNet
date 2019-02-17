@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        //function loaded () {
+        //    alert("hello");
+        //}
+        //document.body.addEventListener("load", loaded);
+        $(function () {
+            //$("td").hide("slow").show("slow");
+  
+            //$("td").click(function () {
+            //    //alert("OK");
+            //    $(this).addClass("style1");
+            //});
+
+            $("td")
+                .mouseenter(function () {
+                    $(this).addClass("style1");
+                })
+                .mouseleave(function () {
+                    $(this).removeClass("style1");
+                })
+                .filter(".no").click(function () {
+                    //$(this).hide("slow");
+
+                    //var txt = $(this).text();
+                    //var no = parseInt(txt) + 1;
+                    //$(this).text(no);
+
+                    var txt = $(this).text();
+                    var result = $("#answer").text() + txt;
+                    $("#answer").text(result);
+                }).end()
+                .filter("#dot").click(function () {
+                    var result = $("#answer").text() + ".";
+                    $("#answer").text(result);
+                });
+        });
+
+    </script>
+    <style>
+        td {
+            width: 40px;
+            height: 40px;
+            color: blue;
+            background-color: yellow;
+            font-size: 32px;
+            text-align: center
+        }
+
+        .style1 {
+            background-color: pink
+        }
+    </style>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <td id="answer" colspan="4"></td>
+        </tr>
+        <tr>
+            <!--<td class="style1">7</td>-->
+            <td class="no">7</td>
+            <!--<td onclick="alert('ok');">8</td>-->
+            <td class="no">8</td>
+            <td class="no">9</td>
+            <td>+</td>
+        </tr>
+        <tr>
+            <td class="no">4</td>
+            <td class="no">5</td>
+            <td class="no">6</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td class="no">1</td>
+            <td class="no">2</td>
+            <td class="no">3</td>
+            <td>x</td>
+        </tr>
+        <tr>
+            <td class="no">0</td>
+            <td id="dot">.</td>
+            <td>=</td>
+            <td>/</td>
+        </tr>
+    </table>
+</body>
+</html>

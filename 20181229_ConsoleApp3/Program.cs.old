@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static void MySort(int[] obj, Func<int, int, bool> f)
+        {
+            for (int i = 0; i < obj.GetUpperBound(0); i++)
+            {
+                for (int j = i+1; j <= obj.GetUpperBound(0); j++)
+                {
+                   // if (f(obj[j], obj[i]))
+                    if (f.Invoke(obj[j], obj[i]))
+                    {
+                        int tmp = obj[i];
+                        obj[i] = obj[j];
+                        obj[j] = tmp;
+                    }
+                }
+            } 
+        }
+        static void Main(string[] args)
+        {
+            int[] data = { 21, 48, 65, 15, 2, 8, 31, 72, 33};
+            //Array.Sort(data);
+            //Array.Reverse(data);
+            MySort(data, (a, b) => a < b);
+            Console.ReadKey();
+        }
+    }
+}

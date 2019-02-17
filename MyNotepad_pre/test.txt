@@ -1,0 +1,17 @@
+private void mnuSaveAs_Click(object sender, EventArgs e)
+        {
+            DialogResult result = saveFileDialog1.ShowDialog();
+            //if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            if (result == DialogResult.OK)
+            {
+                String filename = saveFileDialog1.FileName;
+                this.Text = filename;
+
+                FileStream fs = new FileStream(filename,  FileMode.Create);
+                StreamWriter sw = new StreamWriter(fs);
+                sw.Write(txtBody.Text);
+                sw.Close();
+                fs.Close();
+                MessageBox.Show("ok");
+            }
+        }
