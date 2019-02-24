@@ -37,9 +37,10 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(130, 112);
+            this.button3.Location = new System.Drawing.Point(195, 168);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(112, 34);
             this.button3.TabIndex = 7;
             this.button3.Text = "button3";
             this.button3.UseVisualStyleBackColor = true;
@@ -47,9 +48,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(130, 211);
+            this.button2.Location = new System.Drawing.Point(195, 316);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(112, 34);
             this.button2.TabIndex = 6;
             this.button2.Text = "button2";
             this.button2.UseVisualStyleBackColor = true;
@@ -57,9 +59,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(130, 315);
+            this.button1.Location = new System.Drawing.Point(195, 472);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(112, 34);
             this.button1.TabIndex = 5;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
@@ -67,9 +70,10 @@
             // 
             // btnMove
             // 
-            this.btnMove.Location = new System.Drawing.Point(57, 39);
+            this.btnMove.Location = new System.Drawing.Point(86, 58);
+            this.btnMove.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnMove.Name = "btnMove";
-            this.btnMove.Size = new System.Drawing.Size(75, 23);
+            this.btnMove.Size = new System.Drawing.Size(112, 34);
             this.btnMove.TabIndex = 4;
             this.btnMove.Text = "Move";
             this.btnMove.UseVisualStyleBackColor = true;
@@ -77,26 +81,27 @@
             // 
             // textBox1
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(0, 0);
+            this.textBox1.Location = new System.Drawing.Point(479, 261);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(779, 435);
+            this.textBox1.Size = new System.Drawing.Size(538, 220);
             this.textBox1.TabIndex = 8;
             this.textBox1.WordWrap = false;
             this.textBox1.Click += new System.EventHandler(this.textBox1_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(779, 435);
+            this.ClientSize = new System.Drawing.Size(1168, 652);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnMove);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Click += new System.EventHandler(this.Form1_Click);
