@@ -3,20 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <script src="Scripts/jquery-1.10.2.min.js"></script>
-    <script>
-        //function loaded () {
-        //    alert("hello");
-        //}
-        //document.body.addEventListener("load", loaded);
-        $(function () {
-            //$("td").hide("slow").show("slow");
-  
-            //$("td").click(function () {
-            //    //alert("OK");
-            //    $(this).addClass("style1");
-            //});
 
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+
+    <script>
+
+        $(function () {
             $("td")
                 .mouseenter(function () {
                     $(this).addClass("style1");
@@ -25,23 +17,23 @@
                     $(this).removeClass("style1");
                 })
                 .filter(".no").click(function () {
-                    //$(this).hide("slow");
-
-                    //var txt = $(this).text();
-                    //var no = parseInt(txt) + 1;
-                    //$(this).text(no);
-
                     var txt = $(this).text();
                     var result = $("#answer").text() + txt;
                     $("#answer").text(result);
                 }).end()
                 .filter("#dot").click(function () {
-                    var result = $("#answer").text() + ".";
-                    $("#answer").text(result);
+                    var td = $("#answer");
+                    if (td.text() == "")
+                        td.text("0.");
+                    else if (td.text().indexOf(".") < 0) 
+                        td.text(td.text() + ".");
                 });
         });
 
+
+
     </script>
+
     <style>
         td {
             width: 40px;
@@ -49,23 +41,24 @@
             color: blue;
             background-color: yellow;
             font-size: 32px;
-            text-align: center
+            text-align: center;
         }
 
         .style1 {
-            background-color: pink
+            color:darkslategrey;
+            background-color:mediumpurple;
         }
+
+
     </style>
 </head>
 <body>
     <table border="1">
         <tr>
-            <td id="answer" colspan="4"></td>
+            <td colspan="4" id="answer"></td>
         </tr>
         <tr>
-            <!--<td class="style1">7</td>-->
             <td class="no">7</td>
-            <!--<td onclick="alert('ok');">8</td>-->
             <td class="no">8</td>
             <td class="no">9</td>
             <td>+</td>
