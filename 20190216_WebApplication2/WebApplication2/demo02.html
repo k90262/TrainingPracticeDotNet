@@ -4,38 +4,76 @@
     <meta charset="utf-8" />
     <title></title>
 
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px; /* The height is 400 pixels */
+            width: 800px; /* The width is the width of the web page */
+            background-color:pink;
+        }
+    </style>
+
     <script src="Scripts/jquery-1.10.2.min.js"></script>
-    <script src="Scripts/jquery.tmpl.min.js"></script>
-    <script type="text/x-jquery-tmpl" id="t1">
-        <tr>
-            <td>${經營主體}</td>
-            <td>${地址}</td>
-            <td>${X}</td>
-            <td>${Y}</td>
-        </tr>
-    </script>
-    <!--issue: https://stackoverflow.com/questions/38487136/globalization-support-in-js-render-template
     <script src="Scripts/jsrender.min.js"></script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6xikDMqSFo7S89_9OQB-k8CWQL_zwnr0&callback=initMap">
+    </script>
+
+
+    <script id="myTemplate" type="text/x-jsrender">
+        Name: {{:name}}
+    </script>
+
     <script type="text/x-jsrender" id="t1">
         <tr>
-            <td>{{>經營主體}}</td>
-            <td>{{>地址}}</td>
-            <td>{{>X}}</td>
-            <td>{{>Y}}</td>
+            <td>{{:name}}</td>
+            <td>{{:address}}</td>
+            <td>{{:X}}</td>
+            <td>{{:Y}}</td>
         </tr>
-    </script>-->
+    </script>
+
     <script>
+        var map;
+
+        function initMap() {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                map = new google.maps.Map(
+                    $("#map")[0], { zoom: 15, center: pos });
+
+                var marker = new google.maps.Marker({ position: pos, map: map, title: "我在這裡 !" });
+            });
+        }
+
+        var obj;
+        obj.name = "Peter";
+
 
         $(function () {
 
             $("#btn").click(function () {
                 $.getJSON("https://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=eb4981e4-a6a5-468c-b17f-544880ebad1e", function (data) {
-                    //alert(data.result.results[0].電話);
-                    //alert($("#t1").tmpl);
-                    $("#t1").tmpl(data.result.results).appendTo("#table1");
+                    data.result.results.forEach(function (obj) {
+                        obj.name = obj.經營主體;
+                        obj.address = obj.地址;
 
-                    //var tmpl = $.templates("#t1");
-                    //$(tmpl.render(data.result.results)).appendTo("#table1");
+                        delete obj.經營主體;
+                        delete obj.地址;
+
+                        var pos = {
+                            lat: parseFloat(obj.Y),
+                            lng: parseFloat(obj.X)
+                        };
+                        var marker = new google.maps.Marker({ position: pos, map: map, title: obj.address });
+
+                    });
+                    $($.templates("#t1").render(data.result.results)).appendTo("#table1");
                 });
             });
 
@@ -46,6 +84,8 @@
 </head>
 <body>
     <input type="button" value="取得資料" id="btn" />
+    <hr />
+    <div id="map"></div>
     <hr />
     <table border="1" id="table1">
         <tr>
