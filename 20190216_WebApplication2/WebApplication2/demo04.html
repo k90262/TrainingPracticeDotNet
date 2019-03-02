@@ -4,21 +4,32 @@
     <meta charset="utf-8" />
     <title></title>
     <script src="Scripts/jquery-1.10.2.min.js"></script>
-
+    <script src="Ball.js"></script>
     <script>
+        var count = 50;
         $(function () {
             $("#btn").click(function () {
                 var c = document.getElementById("myCanvas");
                 var ctx = c.getContext("2d");
-                ctx.beginPath();
-                ctx.arc(95, 50, 40, 0, 2 * Math.PI);
 
-                ctx.fillStyle = "red";
-                ctx.fill();
+                var balls = new Array();
 
-                ctx.strokeStyle = "blue";
-                ctx.lineWidth = 5;
-                ctx.stroke();
+                for (var i = 0; i < count; i++) {
+                    // alert("#"+Math.random().toString(16).substr(2, 6));
+                    var r = Math.random() * 40 + 10; // 10 ~ 50
+                    //var color = "red";
+                    var color = "#" + Math.random().toString(16).substr(2, 6);
+                    var dx = Math.random() * 20 + 1; // 1 ~ 21
+                    var dy = Math.random() * 20 + 1; // 1 ~ 21
+                    balls[balls.length] = new Ball(ctx, 100, 100, r, color, dx, dy);
+                }
+                setInterval(function () {
+                    ctx.clearRect(0, 0, c.width, c.height);
+                    for (var i = 0; i < count; i++) {
+                        balls[i].move();
+                        balls[i].show();
+                    }
+                }, 10);
             });
         });
     </script>
@@ -26,7 +37,8 @@
 <body>
     <input type="button" id="btn" value="Draw It !" />
     <hr />
-    <canvas id="myCanvas" width="500" height="400" style="background-color:pink;"></canvas>
+    <img src="http://home.bt.com/images/the-20-best-views-in-the-uk-revealed-136417214455702601-170411144310.jpg" />
+    <canvas id="myCanvas" width="1000" height="600" style="position:absolute;left:300px;top:100px;"></canvas>
 
 </body>
 </html>

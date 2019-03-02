@@ -264,6 +264,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Ball.ts" />
     <TypeScriptCompile Include="Car.ts" />
   </ItemGroup>
   <ItemGroup>
