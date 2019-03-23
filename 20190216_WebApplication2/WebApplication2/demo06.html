@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script src="Scripts/jsrender.min.js"></script>
+
+  
+    <script id="t1" type="text/x-jsrender">
+        <tr>
+            <td>{{:name}}</td>
+            <td>{{:phone}}</td>
+        </tr>
+    </script>
+    <script>
+
+        function show() {
+            $("#table1 tr:gt(0)").remove();
+            var contacts = JSON.parse(localStorage.contacts);
+            contacts.splice(2, 1);
+            $($("#t1").render(contacts)).appendTo("#table1");
+        }
+
+        $(function () {
+            show();
+
+            $("#btnAdd").click(function () {
+                var obj = {
+                    name: $("#name").val(),
+                    phone: $("#phone").val()
+                }
+
+                if (!localStorage.contacts)
+                    localStorage.contacts = "[]";
+
+                var contacts = JSON.parse(localStorage.contacts);
+                contacts[contacts.length] = obj;
+                localStorage.contacts = JSON.stringify(contacts);
+                show();
+            });
+
+        });
+
+    </script>
+</head>
+<body>
+    Name: <input type="text" id="name" /><br />
+    Phone: <input type="text" id="phone" /><br />
+    <input type="button" id="btnAdd" value="Add contact" />
+    <hr />
+    <table id="table1" border="1">
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+        </tr>
+    </table>
+</body>
+</html>
