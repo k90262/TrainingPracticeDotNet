@@ -13,49 +13,111 @@
             <td>{{:name}}</td>
             <td>{{:phone}}</td>
             <td>
-                <input type="button" id="btnDelete" value="刪除" cid="{{:#index}}" /><!-- cid 是自己加的屬性，確保不會和預設屬性混淆就好-->
+                <input type="button" id="btnDelete" value="刪除" key="{{:name}}" /><!-- key 是自己加的屬性，確保不會和預設屬性混淆就好-->
             </td>
         </tr>
     </script>
     <script>
+        function openDB(callback) {
+            var request = window.indexedDB.open("mydb", 4);
+            request.onsuccess = function (e) {
+                db = request.result;
+                callback(db);
+            }
+            request.onupgradeneeded = function (event) {
+                var db = event.target.result;
+
+                // Create an objectStore for this database
+                var objectStore;
+                alert(event.oldVersion);
+                if (event.oldVersion < 2) {
+                    objectStore = db.createObjectStore("contacts", { keyPath: "name" });
+                    alert("create contacts");
+                }
+                if (event.oldVersion < 3) {
+                    objectStore = db.createObjectStore("products", { keyPath: "productId" });
+                    alert("create products");
+                }
+                if (event.oldVersion < 4) {
+                    objectStore = event.target.transaction.objectStore("contacts");
+                    objectStore.createIndex("phone_index", "phone", { unique: false });
+                    alert("create phone_index");
+                }
+            };
+        }
 
         function show() {
             //alert("test load");
             $("#table1 tr:gt(0)").remove();
 
-            //var contacts = localStorage.contacts ?
-            //    JSON.parse(localStorage.contacts) :
-            //    new Array();
-            //alert("test load show");
-            var contacts = JSON.parse(localStorage.contacts);
-            $($("#t1").render(contacts)).appendTo("#table1");
-            $("input[id=btnDelete]").click(function () {
-                var id = $(this).attr("cid");
-                contacts.splice(id, 1);
-                localStorage.contacts = JSON.stringify(contacts);
-                show();
-            });
-        }
+            openDB(function (db) {
+                var objectStore = db.transaction("contacts").objectStore("contacts");
 
+                objectStore.openCursor().onsuccess = processCursor;
+            });
+
+            //$("input[id=btnDelete]").click(function () {
+            //    var id = $(this).attr("cid");
+            //    contacts.splice(id, 1);
+            //    ////localStorage.contacts = JSON.stringify(contacts);
+            //    show();
+            //});
+        }
+        function processCursor(event) {
+            var cursor = event.target.result;
+            if (cursor) {
+                $($("#t1").render(cursor.value))
+                    .find("#btnDelete").click(function () {
+                        var key = $(this).attr("key");
+                        //alert(key);
+                        db.transaction("contacts", "readwrite").objectStore("contacts")
+                            .delete(key).onsuccess = function (e) {
+                                show();
+                            }
+                    }).end()
+                    .appendTo("#table1");
+                cursor.continue();
+            }
+        }
         $(function () {
 
-            if (!localStorage.contacts)
-                localStorage.contacts = "[]";
+            ////if (!localStorage.contacts)
+            ////    localStorage.contacts = "[]";
 
             show();
 
             $("#btnAdd").click(function () {
-                var obj = {
-                    name: $("#name").val(),
-                    phone: $("#phone").val()
-                }
-                //alert("test");
-                var contacts = JSON.parse(localStorage.contacts);
-                contacts[contacts.length] = obj;
-                localStorage.contacts = JSON.stringify(contacts);
-                show();
+                openDB(function (db) {
+                    alert(db.name);
+                    var obj = {
+                        name: $("#name").val(),
+                        phone: $("#phone").val()
+                    }
+                    var transaction = db.transaction(["contacts"], "readwrite");
+                    var objectStore = transaction.objectStore("contacts");
+                    //var request = objectStore.add(obj);
+                    var request = objectStore.put(obj); // 可修改同樣key的value
+                    request.onsuccess = function (event) {
+                        show();
+                    };
+                });
             });
+                //alert("test");
+                ////var contacts = JSON.parse(localStorage.contacts);
+                ////contacts[contacts.length] = obj;
+                ////localStorage.contacts = JSON.stringify(contacts);
 
+                $("#btnSearch").click(function () {
+                    openDB(function (db) {
+                        var transaction = db.transaction(["contacts"], "readwrite");
+                        var objectStore = transaction.objectStore("contacts");
+                        var index = objectStore.index("phone_index");
+                        var boundKeyRange = IDBKeyRange.bound($("#phone1").val(), $("#phone2").val(), false, false);
+
+                        $("#table1 tr:gt(0)").remove();
+                        index.openCursor(boundKeyRange).onsuccess = processCursor;
+                    });
+                });
         });
 
     </script>
@@ -64,6 +126,9 @@
     Name: <input type="text" id="name" /><br />
     Phone: <input type="text" id="phone" /><br />
     <input type="button" id="btnAdd" value="Add contact" />
+    <hr />
+    電話: <input type="text" id="phone1" /> ~ <input type="text" id="phone2" />
+    <input type="button" id="btnSearch" value="搜尋電話" />
     <hr />
     <table id="table1" border="1">
         <tr>
