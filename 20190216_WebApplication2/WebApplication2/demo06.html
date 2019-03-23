@@ -6,23 +6,42 @@
     <script src="Scripts/jquery-1.10.2.min.js"></script>
     <script src="Scripts/jsrender.min.js"></script>
 
-  
+
     <script id="t1" type="text/x-jsrender">
         <tr>
+            <td>{{:#index}}</td>
             <td>{{:name}}</td>
             <td>{{:phone}}</td>
+            <td>
+                <input type="button" id="btnDelete" value="刪除" cid="{{:#index}}" /><!-- cid 是自己加的屬性，確保不會和預設屬性混淆就好-->
+            </td>
         </tr>
     </script>
     <script>
 
         function show() {
+            //alert("test load");
             $("#table1 tr:gt(0)").remove();
+
+            //var contacts = localStorage.contacts ?
+            //    JSON.parse(localStorage.contacts) :
+            //    new Array();
+            //alert("test load show");
             var contacts = JSON.parse(localStorage.contacts);
-            contacts.splice(2, 1);
             $($("#t1").render(contacts)).appendTo("#table1");
+            $("input[id=btnDelete]").click(function () {
+                var id = $(this).attr("cid");
+                contacts.splice(id, 1);
+                localStorage.contacts = JSON.stringify(contacts);
+                show();
+            });
         }
 
         $(function () {
+
+            if (!localStorage.contacts)
+                localStorage.contacts = "[]";
+
             show();
 
             $("#btnAdd").click(function () {
@@ -30,10 +49,7 @@
                     name: $("#name").val(),
                     phone: $("#phone").val()
                 }
-
-                if (!localStorage.contacts)
-                    localStorage.contacts = "[]";
-
+                //alert("test");
                 var contacts = JSON.parse(localStorage.contacts);
                 contacts[contacts.length] = obj;
                 localStorage.contacts = JSON.stringify(contacts);
@@ -51,8 +67,10 @@
     <hr />
     <table id="table1" border="1">
         <tr>
+            <th>No</th>
             <th>Name</th>
             <th>Phone</th>
+            <th></th>
         </tr>
     </table>
 </body>
