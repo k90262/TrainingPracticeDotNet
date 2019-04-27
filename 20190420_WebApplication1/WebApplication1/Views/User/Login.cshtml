@@ -1,14 +1,16 @@
-﻿
+﻿@model WebApplication1.Models.LoginModel
 @{
     ViewBag.Title = "Login";
 }
 
 <h2>Login</h2>
 @*<form action="http://www.hinet.net" method="post">*@
-<form action="/User/Login" method="post">
-    User: <input type="text" name="username" /><br />
-    Password: <input type="password" name="password" /><br />
-    <input type="submit" value="登入" />
-</form>
-
+@using (Html.BeginForm())
+{
+    @*<span>User:</span> <input type="text" name="username" value="@(Model == null ? "" : Model.username)" /><br />
+        <span>Password:</span> <input type="password" name="password" value="@(Model == null ? "" : Model.password)" /><br />*@
+    <span>User:</span>@Html.TextBoxFor(m => m.username)<br />
+    <span>Password:</span> @Html.PasswordFor(m => m.password)<br />
+        <input type="submit" value="登入" />
+}
 

@@ -16,10 +16,12 @@ namespace WebApplication1.Controllers
         }
         
         [HttpPost]
-        public ActionResult Login(string username, string passwordj)
-        //public ActionResult Login(LoginModel obj)
+        public ActionResult Login(LoginModel obj)
         {
-            return RedirectToAction("LoginResult");
+            if (obj.username == "user1" && obj.password == "123")
+                return RedirectToAction("LoginResult");
+            else
+                return View(obj);
         }
 
         public ActionResult LoginResult()
