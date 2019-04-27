@@ -199,6 +199,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Content\DemoController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CustController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -317,6 +318,11 @@
     <Content Include="Views\User\LoginResult.cshtml" />
     <Content Include="Views\Customers\Create.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
+    <Content Include="Views\Cust\Create.cshtml" />
+    <Content Include="Views\Cust\Delete.cshtml" />
+    <Content Include="Views\Cust\Details.cshtml" />
+    <Content Include="Views\Cust\Edit.cshtml" />
+    <Content Include="Views\Cust\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

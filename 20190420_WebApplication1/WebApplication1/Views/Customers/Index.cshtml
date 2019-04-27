@@ -6,7 +6,8 @@
 <h2>Index</h2>
 
 @*@Model.Count()*@
-<a href="~/Customers/Create">New Customer</a>
+@*<a href="~/Customers/Create">New Customer</a>*@
+@Html.ActionLink("新增使用者", "Create")
 <table border="1">
     <tr>
         <th>編號</th>
@@ -22,7 +23,9 @@
             @*<td>@obj.Birthday</td>*@
             <td>@obj.Birthday.Value.ToShortDateString()</td>
             <td>
-                <a href="~/Customers/Delete?id=@obj.CustomerID">Delete</a>
+                @*<a href="~/Customers/Delete?id=@obj.CustomerID onclick="return confirm('Are you sure?');">Delete</a>*@
+                @Html.ActionLink("刪除", "Delete", new {id=obj.CustomerID}, new { onclick="return confirm('Are you sure?');" })
+                @Html.ActionLink("編輯", "Edit", new { id = obj.CustomerID })
             </td>
         </tr>
     }
