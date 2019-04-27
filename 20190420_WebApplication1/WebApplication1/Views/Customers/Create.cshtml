@@ -1,0 +1,13 @@
+﻿@model WebApplication1.Models.Customer
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    <span>Name</span>@Html.TextBoxFor( m => m.Name )<br />
+    <span>Birthday</span>@Html.TextBoxFor( m => m.Birthday )<br />
+    <input type="submit" value="sumit" />
+}
+
