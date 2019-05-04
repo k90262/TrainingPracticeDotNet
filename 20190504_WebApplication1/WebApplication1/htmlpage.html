@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        function addTR(obj) {
+            $("#tr1").clone().show()
+                .find("#CustomerID").text(obj.CustomerId).end()
+                .find("#Name").text(obj.Name).end()
+                .find("#Birthday").text(obj.Birthday).end()
+                .appendTo("#t1");
+        }
+
+        $(function () {
+            //alert("OK");
+            $("#btn").click(function () {
+                //alert("OK");
+                $.getJSON("/api/Customers", function (data) {
+                    //alert(data.length);
+                    //alert(data[0].Name);
+                    $("#t1 tr:gt(1)").remove();
+                    for (var i = 0; i < data.length; i++) {
+                        //alert(data[i].Name);
+                        addTR(data[i]);
+                    }
+                })
+            });
+            $("#btnAdd").click(function () {
+                //alert("OK");
+                var obj = {
+                    Name: $("#name").val(),
+                    BirthDay: $("#birthday").val()
+                }
+                $.ajax({
+                    url: "/api/Customers",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(obj),
+                    success: function (data) {
+                        addTR(data);
+                    },
+                    error: function (a, b) {
+                        alert(a);
+                        alert(b);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    Name: <input type="text" id="name" /><br />
+    Birthday: <input type="date" id="birthday" /><br />
+    <input type="button" id="btnAdd" value="新增" />
+    <hr />
+    <input type="button" id="btn" value="取得所有客戶資訊" />
+    <hr />
+    <table border="1" id="t1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>BD</th>
+        </tr>
+        <tr id="tr1" style="display:none">
+            <td id="CustomerID">1</td>
+            <td id="Name">Ken</td>
+            <td id="Birthday">1983-8-8</td>
+        </tr>
+    </table>
+</body>
+</html>

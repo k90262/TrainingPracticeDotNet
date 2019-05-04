@@ -29,14 +29,14 @@ namespace WebApplication1
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            ODataModelBuilder builder = new ODataConventionModelBuilder();
-            config.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
-            builder.EntitySet<Customer>("Customers");
+            //ODataModelBuilder builder = new ODataConventionModelBuilder();
+            //config.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
+            //builder.EntitySet<Customer>("Customers");
 
-            config.MapODataServiceRoute(
-                routeName: "ODataRoute",
-                routePrefix: null,
-                model: builder.GetEdmModel());
+            //config.MapODataServiceRoute(
+            //    routeName: "ODataRoute",
+            //    routePrefix: null,
+            //    model: builder.GetEdmModel());
 
         }
     }

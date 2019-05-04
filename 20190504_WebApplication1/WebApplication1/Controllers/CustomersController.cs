@@ -10,11 +10,10 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class CustomersController : ODataController
+    public class CustomersController : ApiController
     {
         Database1Entities db = new Database1Entities();
 
-        [EnableQuery]
         public IQueryable<Customer> Get()
         {
             return db.Customers;
@@ -38,10 +37,17 @@ namespace WebApplication1.Controllers
 
         public Customer Put(int id,Customer obj)
         {
-            obj.CustomerId = id;
-            db.Entry(obj).State=EntityState.Modified;
-            db.SaveChanges();
-            return obj;
+            try
+            {
+                obj.CustomerId = id;
+                db.Entry(obj).State = EntityState.Modified;
+                db.SaveChanges();
+                return obj;
+            }
+            catch {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+
 
         }
 

@@ -302,6 +302,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="htmlpage.html" />
     <Content Include="Models\Databass1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Databass1.edmx</DependentUpon>
