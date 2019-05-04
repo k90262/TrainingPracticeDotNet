@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.OData;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -9,11 +10,12 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class CustomersController : ApiController
+    public class CustomersController : ODataController
     {
         Database1Entities db = new Database1Entities();
 
-        public IEnumerable<Customer> Get()
+        [EnableQuery]
+        public IQueryable<Customer> Get()
         {
             return db.Customers;
         }
@@ -43,5 +45,17 @@ namespace WebApplication1.Controllers
 
         }
 
+        public Customer Delete(int id)
+        {
+            Customer obj = db.Customers.Find(id);
+            if (obj != null)
+            {
+                db.Customers.Remove(obj);
+                db.SaveChanges();
+                return obj;
+            }
+            else
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+        }
     }
 }
