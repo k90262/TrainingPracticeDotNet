@@ -1,18 +1,20 @@
-﻿
+﻿@model WebApplication1.Models.BMIModel
 @{
     ViewBag.Title = "BMI";
 }
-
+@*@Model*@
 <h2>BMI</h2>
 
-@*Health: <input type="text" id="health" /><br />
-Weight: <input type="text" id="weight" /><br />
-<input type="button" value="計算BMI"/><br />
-BMI =*@ 
+@*<form action="~/Health/BMI" method="post">
+    身高: <input type="text" name="Height" value="@(Model == null ? "" : Model.Height.ToString())" /> <br />
+    體重: <input type="text" name="Weight" value="@(Model == null ? "" : Model.Weight.ToString())" /> <br />
+    <input type="submit" value="計算BMI" /><br />
+    BMI = @(Model == null ? "" : Model.BMI.ToString())
+</form>*@
 
 <form action="~/Health/BMI" method="post">
-    身高: <input type="text" name="Height" value="@ViewBag.Height" /> <br />
-    體重: <input type="text" name="Weight" value="@ViewBag.Weight" /> <br />
+    身高: @Html.TextBoxFor(m => m.Height) <br />
+    體重: @Html.TextBoxFor(m => m.Weight) <br />
     <input type="submit" value="計算BMI" /><br />
-    BMI = @ViewBag.BMI
+    BMI = @Html.DisplayFor(m => m.Height)
 </form>

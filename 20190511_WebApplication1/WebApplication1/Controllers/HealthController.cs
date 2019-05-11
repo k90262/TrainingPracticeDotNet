@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -15,15 +16,11 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public ActionResult BMI(double Height, double Weight)
+        public ActionResult BMI(BMIModel obj)
         {
-            double h = Height / 100;
-            double bmi = Weight / h / h;
-
-            ViewBag.Height = Height;
-            ViewBag.Weight = Weight;
-            ViewBag.BMI = bmi;
-            return View();
+            double h = obj.Height / 100;
+            obj.BMI = obj.Weight / h / h;
+            return View(obj);
         }
     }
 }
