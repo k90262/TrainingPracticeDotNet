@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "BMI";
+}
+
+<h2>BMI</h2>
+
+@*Health: <input type="text" id="health" /><br />
+Weight: <input type="text" id="weight" /><br />
+<input type="button" value="計算BMI"/><br />
+BMI =*@ 
+
+<form action="~/Health/BMI" method="post">
+    身高: <input type="text" name="Height" value="@ViewBag.Height" /> <br />
+    體重: <input type="text" name="Weight" value="@ViewBag.Weight" /> <br />
+    <input type="submit" value="計算BMI" /><br />
+    BMI = @ViewBag.BMI
+</form>
