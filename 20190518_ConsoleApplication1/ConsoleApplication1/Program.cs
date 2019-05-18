@@ -40,20 +40,92 @@ namespace ConsoleApplication1
             //    }
             //}
 
-            var result = 
+            // LINQ
+            var result =
                 from c in db.Customers
-                where c.Birthday.Value.Month == 8
                 select c;
-
             Console.WriteLine(result.ToString());
-
-            foreach (var obj in result) {
+            foreach (var obj in result)
+            {
                 Console.WriteLine("{0}\t{1}\t{2}",
                     obj.CustomerID,
                     obj.Name,
                     obj.Birthday
                 );
             }
+
+            // LINQ JOIN
+            //var result =
+            //    from c in db.Customers
+            //    join o in db.Orders on c.CustomerID equals o.CustomerID
+            //    join p in db.Products on o.ProductID equals p.ProductID
+            //    where c.Birthday.Value.Month == 9
+            //    select new { CustomerName = c.Name, ID = c.CustomerID, c.Birthday, ODate = o.OrderDate, PName = p.Name };
+            //Console.WriteLine(result.ToString());
+            //foreach (var obj in result)
+            //{
+            //    Console.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}",
+            //        obj.CustomerName,
+            //        obj.ID,
+            //        obj.Birthday,
+            //        obj.ODate,
+            //        obj.PName
+            //    );
+            //}
+
+            // LINQ JOIN (other way)
+            //var result =
+            //    from c in db.Customers
+            //    from o in c.Orders
+            //    let p = o.Product
+            //    where c.Birthday.Value.Month == 9
+            //    select new { CustomerName = c.Name, ID = c.CustomerID, c.Birthday, ODate = o.OrderDate, PName = p.Name };
+            //Console.WriteLine(result.ToString());
+            //foreach (var obj in result)
+            //{
+            //    Console.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}",
+            //        obj.CustomerName,
+            //        obj.ID,
+            //        obj.Birthday,
+            //        obj.ODate,
+            //        obj.PName
+            //    );
+            //}
+
+            // ADD
+            //var obj = new Customer();
+            //obj.Name = "Jackson";
+            //obj.Birthday = new DateTime(2000, 5, 12);
+            //db.Customers.Add(obj);
+            //db.SaveChanges();
+
+            // MODIFIED
+            //var result = from c in db.Customers
+            //             where c.Birthday.Value.Month == 8
+            //             select c;
+            //foreach (var obj in result) {
+            //    obj.Birthday = new DateTime(obj.Birthday.Value.Year, 9, obj.Birthday.Value.Day);
+            //}
+            //db.SaveChanges();
+
+            // DELETE
+            //var result = from c in db.Customers
+            //             where c.CustomerID == 3
+            //             select c;
+            //foreach (var obj in result)
+            //{
+            //    db.Customers.Remove(obj);
+            //}
+            //db.SaveChanges();
+
+            // MODIFIED ver2 (better performance, without get data first)
+            //var obj = new Customer();
+            //obj.CustomerID = 4;
+            //obj.Name = "Jackson 2";
+            //obj.Birthday = new DateTime(2002, 2, 2);
+            //db.Entry(obj).State = System.Data.Entity.EntityState.Modified;
+            //db.SaveChanges();
+
             Console.WriteLine("OK");
             Console.ReadKey();
         }
