@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1872a1fb7a5546159ff4a9cd023872d5" Name="Diagram1">
+        <EntityTypeShape EntityType="Database1Model.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.CarBrand" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Car" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Cours" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Customer" Width="1.5" PointX="2.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Members1" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Members2" Width="1.5" PointX="4.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Order" Width="1.5" PointX="5" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Product" Width="1.5" PointX="2.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Score" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Student" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <AssociationConnector Association="Database1Model.FK_dbo_Cars_dbo_CarBrands_BrandNo" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_CourseScore" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_Orders_ToCustomers" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_Orders_ToProducts" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_StudentScore" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Database1Model.MyData" Width="1.5" PointX="7.375" PointY="9.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

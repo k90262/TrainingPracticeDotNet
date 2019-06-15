@@ -1,0 +1,17 @@
+﻿@model WebApplication1.Models.Order
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    <span>訂單日期:</span> @Html.TextBoxFor(m => m.OrderDate) @Html.ValidationMessageFor(m => m.OrderDate) <br />
+    <span>客戶:</span> @Html.DropDownList("CustomerID") @Html.ValidationMessageFor(m => m.CustomerID)<br />
+    <span>產品:</span> @Html.DropDownList("ProductID") @Html.ValidationMessageFor(m => m.ProductID)<br />
+    <span>單價:</span> @Html.TextBoxFor(m => m.Price) @Html.ValidationMessageFor(m => m.Price)<br />
+    <span>數量:</span> @Html.TextBoxFor(m => m.Quantity) @Html.ValidationMessageFor(m => m.Quantity)<br />
+    <input type="submit" value="修改訂單" />
+}

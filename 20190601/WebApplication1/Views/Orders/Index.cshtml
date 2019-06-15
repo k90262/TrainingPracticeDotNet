@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WebApplication1.Models.Order>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@Html.ActionLink("新增訂單", "Create")
+
+<table border="1">
+    <tr>
+        <th>編號</th>
+        <th>日期</th>
+        <th>客戶</th>
+        <th>產品</th>
+        <th>價格</th>
+        <th>數量</th>
+        <th>小計</th>
+        <th></th>
+    </tr>
+    @foreach(var o in Model)
+    {
+        <tr>
+            <td>@o.OrderID</td>
+            <td>@o.OrderDate</td>
+            <td>@o.Customer.Name</td>
+            <td>@o.Product.Name</td>
+            <td>@o.Price</td>
+            <td>@o.Quantity</td>
+            <td>@(o.Price * o.Quantity)</td>
+            <td>
+                @Html.ActionLink("編輯", "Edit", new { id = o.OrderID })
+                @Html.ActionLink("刪除", "Delete", new { id = o.OrderID }, new { onclick = "return confirm('確定要刪除嗎?');" })
+            </td>
+        </tr>
+    }
+
+</table>
+

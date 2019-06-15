@@ -1,0 +1,14 @@
+﻿@model WebApplication1.Models.Customer
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    <span>姓名:</span> @Html.TextBoxFor(m => m.Name) @Html.ValidationMessageFor(m => m.Name) <br />
+    <span>生日:</span> @Html.TextBoxFor(m => m.Birthday) @Html.ValidationMessageFor(m => m.Birthday) <br />
+    <input type="submit" value="修改客戶" />
+}

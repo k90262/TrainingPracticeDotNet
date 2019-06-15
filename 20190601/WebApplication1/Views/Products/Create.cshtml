@@ -1,0 +1,14 @@
+﻿@model WebApplication1.Models.Product
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    <span>產品名稱:</span> @Html.TextBoxFor(m => m.Name) @Html.ValidationMessageFor(m => m.Name)<br />
+    <span>產品價格:</span> @Html.TextBoxFor(m => m.Price) @Html.ValidationMessageFor(m => m.Price)<br />
+    <input type="submit" value="新增產品" />
+}
