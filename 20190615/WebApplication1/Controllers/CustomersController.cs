@@ -8,6 +8,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize(Roles = "Users")]
     public class CustomersController : Controller
     {
         Database1Entities db = new Database1Entities();
@@ -16,7 +17,7 @@ namespace WebApplication1.Controllers
             ViewBag.CustomerID = id;
             return View(db.Customers);
         }
-
+        [Authorize(Roles = "Admins")]
         public ActionResult Create()
         {
             return View();

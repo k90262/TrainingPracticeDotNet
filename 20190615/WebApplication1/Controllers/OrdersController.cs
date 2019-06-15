@@ -15,7 +15,7 @@ namespace WebApplication1.Controllers
         {
             return View(db.Orders);
         }
-
+        //[Authorize(Users="test1@test.org")]
         public ActionResult Create()
         {
             var obj = new OrderViewModel();
@@ -42,7 +42,7 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Index");
             }
         }
-
+        //[Authorize(Users ="test2@test.org")]
         public ActionResult Edit(int id)
         {
             var obj = new OrderViewModel();
