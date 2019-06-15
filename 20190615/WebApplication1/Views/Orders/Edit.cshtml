@@ -1,4 +1,4 @@
-﻿@model WebApplication1.Models.Order
+﻿@model WebApplication1.Models.OrderViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -8,19 +8,19 @@
 
 @using (Html.BeginForm())
 {
-    <span>訂單日期:</span> @Html.TextBoxFor(m => m.OrderDate) @Html.ValidationMessageFor(m => m.OrderDate) <br />
-    <span>客戶:</span> @Html.DropDownList("CustomerID") @Html.ValidationMessageFor(m => m.CustomerID)<br />
-    <span>產品:</span> @Html.DropDownList("ProductID") @Html.ValidationMessageFor(m => m.ProductID)<br />
-    <span>單價:</span> @Html.TextBoxFor(m => m.Price) @Html.ValidationMessageFor(m => m.Price)<br />
-    <span>數量:</span> @Html.TextBoxFor(m => m.Quantity) @Html.ValidationMessageFor(m => m.Quantity)<br />
+    <span>訂單日期:</span> @Html.TextBoxFor(m => m.Order.OrderDate) @Html.ValidationMessageFor(m => m.Order.OrderDate) <br />
+    <span>客戶:</span> @Html.DropDownList("Order.CustomerID", Model.Customers) @Html.ValidationMessageFor(m => m.Order.CustomerID)<br />
+    <span>產品:</span> @Html.DropDownList("Order.ProductID", Model.Products) @Html.ValidationMessageFor(m => m.Order.ProductID)<br />
+    <span>單價:</span> @Html.TextBoxFor(m => m.Order.Price) @Html.ValidationMessageFor(m => m.Order.Price)<br />
+    <span>數量:</span> @Html.TextBoxFor(m => m.Order.Quantity) @Html.ValidationMessageFor(m => m.Order.Quantity)<br />
     <input type="submit" value="修改訂單" name="btnUpdate" />
 }
 
 
 @section scripts {
     <script>
-        $("#Price").val(@ViewBag.Price);
-        $("#ProductID").change(function () {
+        $("#Order_Price").val(@Model.Price);
+        $("#Order_ProductID").change(function () {
             this.form.submit();
         });
     </script>

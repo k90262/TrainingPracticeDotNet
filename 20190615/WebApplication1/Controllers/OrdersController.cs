@@ -18,25 +18,26 @@ namespace WebApplication1.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "Name");
-            ViewBag.ProductID = new SelectList(db.Products, "ProductID", "Name");
-            ViewBag.Price = db.Products.First().Price;
-            return View();
+            var obj = new OrderViewModel();
+            obj.Customers = new SelectList(db.Customers, "CustomerID", "Name");
+            obj.Products = new SelectList(db.Products, "ProductID", "Name");
+            obj.Price = db.Products.First().Price;
+            return View(obj);
         }
 
         [HttpPost]
-        public ActionResult Create(Order obj, string btnAdd)
+        public ActionResult Create(OrderViewModel obj, string btnAdd)
         {
             if (btnAdd == null)
             {
-                ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "Name");
-                ViewBag.ProductID = new SelectList(db.Products, "ProductID", "Name");
-                ViewBag.Price = db.Products.Find(obj.ProductID).Price;
+                obj.Customers = new SelectList(db.Customers, "CustomerID", "Name");
+                obj.Products = new SelectList(db.Products, "ProductID", "Name");
+                obj.Price = db.Products.Find(obj.Order.ProductID).Price;
                 return View(obj);
             }
             else
             {
-                db.Orders.Add(obj);
+                db.Orders.Add(obj.Order);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -44,29 +45,29 @@ namespace WebApplication1.Controllers
 
         public ActionResult Edit(int id)
         {
-            var obj = db.Orders.Find(id);
-
-            ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "Name", obj.CustomerID);
-            ViewBag.ProductID = new SelectList(db.Products, "ProductID", "Name", obj.ProductID);
-            ViewBag.Price = obj.Price;
+            var obj = new OrderViewModel();
+            obj.Order = db.Orders.Find(id);
+            obj.Customers = new SelectList(db.Customers, "CustomerID", "Name", obj.Order.CustomerID);
+            obj.Products = new SelectList(db.Products, "ProductID", "Name", obj.Order.ProductID);
+            obj.Price = obj.Order.Price;
 
             return View(obj);
         }
 
         [HttpPost]
-        public ActionResult Edit(int id, Order obj, string btnUpdate)
+        public ActionResult Edit(int id, OrderViewModel obj, string btnUpdate)
         {
             if (btnUpdate == null)
             {
-                ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "Name");
-                ViewBag.ProductID = new SelectList(db.Products, "ProductID", "Name");
-                ViewBag.Price = db.Products.Find(obj.ProductID).Price;
+                obj.Customers = new SelectList(db.Customers, "CustomerID", "Name");
+                obj.Products = new SelectList(db.Products, "ProductID", "Name");
+                obj.Price = db.Products.Find(obj.Order.ProductID).Price;
                 return View(obj);
             }
             else
             {
-                obj.OrderID = id;
-                db.Entry(obj).State = EntityState.Modified;
+                obj.Order.OrderID = id;
+                db.Entry(obj.Order).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
