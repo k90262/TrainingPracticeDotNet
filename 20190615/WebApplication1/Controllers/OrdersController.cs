@@ -20,15 +20,26 @@ namespace WebApplication1.Controllers
         {
             ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "Name");
             ViewBag.ProductID = new SelectList(db.Products, "ProductID", "Name");
+            ViewBag.Price = db.Products.First().Price;
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(Order obj)
+        public ActionResult Create(Order obj, string btnAdd)
         {
-            db.Orders.Add(obj);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (btnAdd == null)
+            {
+                ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "Name");
+                ViewBag.ProductID = new SelectList(db.Products, "ProductID", "Name");
+                ViewBag.Price = db.Products.Find(obj.ProductID).Price;
+                return View(obj);
+            }
+            else
+            {
+                db.Orders.Add(obj);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
         }
 
         public ActionResult Edit(int id)
@@ -37,17 +48,28 @@ namespace WebApplication1.Controllers
 
             ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "Name", obj.CustomerID);
             ViewBag.ProductID = new SelectList(db.Products, "ProductID", "Name", obj.ProductID);
+            ViewBag.Price = obj.Price;
 
             return View(obj);
         }
 
         [HttpPost]
-        public ActionResult Edit(int id, Order obj)
+        public ActionResult Edit(int id, Order obj, string btnUpdate)
         {
-            obj.OrderID = id;
-            db.Entry(obj).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (btnUpdate == null)
+            {
+                ViewBag.CustomerID = new SelectList(db.Customers, "CustomerID", "Name");
+                ViewBag.ProductID = new SelectList(db.Products, "ProductID", "Name");
+                ViewBag.Price = db.Products.Find(obj.ProductID).Price;
+                return View(obj);
+            }
+            else
+            {
+                obj.OrderID = id;
+                db.Entry(obj).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
         }
 
         public ActionResult Delete(int id)

@@ -13,5 +13,15 @@
     <span>產品:</span> @Html.DropDownList("ProductID") @Html.ValidationMessageFor(m => m.ProductID)<br />
     <span>單價:</span> @Html.TextBoxFor(m => m.Price) @Html.ValidationMessageFor(m => m.Price)<br />
     <span>數量:</span> @Html.TextBoxFor(m => m.Quantity) @Html.ValidationMessageFor(m => m.Quantity)<br />
-    <input type="submit" value="修改訂單" />
+    <input type="submit" value="修改訂單" name="btnUpdate" />
+}
+
+
+@section scripts {
+    <script>
+        $("#Price").val(@ViewBag.Price);
+        $("#ProductID").change(function () {
+            this.form.submit();
+        });
+    </script>
 }

@@ -11,8 +11,9 @@ namespace WebApplication1.Controllers
     public class CustomersController : Controller
     {
         Database1Entities db = new Database1Entities();
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
+            ViewBag.CustomerID = id;
             return View(db.Customers);
         }
 
@@ -28,7 +29,7 @@ namespace WebApplication1.Controllers
             {
                 db.Customers.Add(obj);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = obj.CustomerID });
             }
             else
                 return View(obj);
@@ -46,7 +47,7 @@ namespace WebApplication1.Controllers
             obj.CustomerID = id;
             db.Entry(obj).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = id });
         }
 
         public ActionResult Delete(int id)
