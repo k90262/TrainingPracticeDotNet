@@ -23,10 +23,33 @@
                     $($.templates("#jt").render(result)).appendTo("#t1"); //將純文字HTNL轉成jQuery物件後，就可呼叫appendTo函式來塞入t1
                 });
             });
+
+            $("#btnAdd").click(function () {
+                var obj = {
+                    Name: $("#name").val(),
+                    Birthday: $("#birthday").val()
+                };
+                var json = JSON.stringify(obj);
+                //alert(json);
+
+                $.ajax({
+                    url: "/api/Customers",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: json,
+                    success: function (result) {
+                        alert(JSON.stringify(result));
+                    }
+                });
+            });
         });
     </script>
 </head>
 <body>
+    Name: <input type="text" id="name" /><br />
+    Birthday: <input type="date" id="birthday" /><br />
+    <button id="btnAdd">新增一個客戶</button>
+    <hr />
     <button id="btnGetAll">取得所有資訊</button>
     <hr />
     <table id="t1" border="1">

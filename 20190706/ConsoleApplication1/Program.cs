@@ -13,7 +13,7 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            Console.Write("Enter an key to call web api ...");
+            Console.WriteLine("Enter an key to call web api ...");
             Console.ReadKey();
 
             WebClient client = new WebClient();
@@ -21,14 +21,33 @@ namespace ConsoleApplication1
             string s = client.DownloadString("/api/Customers");
             //Console.WriteLine(s);
 
+            /*** JSON to obj ***/
             //var result = (JArray)JsonConvert.DeserializeObject(s);
             //Console.Write(result.Count.ToString());
-            var result = JsonConvert.DeserializeObject<Customer[]>(s);
-            foreach (Customer c in result)
+
+            /** to Strong type method**/
+            //var result = JsonConvert.DeserializeObject<Customer[]>(s);
+            //foreach (Customer c in result)
+            //{
+            //    Console.WriteLine("{0}\t{1}\t{2}", c.CustomerID, c.Name, c.Birthday);
+            //}
+
+            /** to Weak type mehtod **/
+            //dynamic result = JArray.Parse(s).Cast<dynamic>().ToArray();
+            var result = JArray.Parse(s);
+            foreach (dynamic c in result)
             {
                 Console.WriteLine("{0}\t{1}\t{2}", c.CustomerID, c.Name, c.Birthday);
             }
 
+            /*** obj to JSON ***/
+            var obj1 = new Customer();
+            obj1.CustomerID = 11;
+            obj1.Name = "Cola";
+            obj1.Birthday = DateTime.Parse("1980/8/1");
+
+            var jo = JObject.FromObject(obj1);
+            Console.WriteLine(jo.ToString());
             Console.ReadKey();
         }
     }
