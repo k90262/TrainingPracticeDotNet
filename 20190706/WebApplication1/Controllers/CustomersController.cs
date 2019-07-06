@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -18,6 +19,27 @@ namespace WebApplication1.Controllers
         public IEnumerable<Customer> Get()
         {
            return db.Customers; 
+        }
+
+        public Customer Post(Customer obj)
+        {
+            db.Customers.Add(obj);
+            db.SaveChanges();
+            return obj;
+        }
+
+        public Customer Put(Customer obj)
+        {
+            db.Entry(obj).State = EntityState.Modified;
+            db.SaveChanges();
+            return obj;
+        }
+        public void Delete(int id) {
+            var obj = db.Customers.Find(id);
+            if (obj != null) {
+                db.Customers.Remove(obj);
+                db.SaveChanges();
+            } 
         }
     }
 }

@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script src="Scripts/jsrender.min.js"></script>
+    <script id="jt" type="text/x-jsrender">
+        <tr>
+            <td>{{:CustomerID}}</td>
+            <td>{{:Name}}</td>
+            <td>{{:Birthday}}</td>
+            <td></td>
+        </tr>
+    </script>
+    <script>
+        $(function () {
+            $("#btnGetAll").click(function () {
+                $.getJSON("/api/Customers", function (result) {
+                    //alert(result.length);
+                    //alert($.templates("#jt").render(result));
+                    $($.templates("#jt").render(result)).appendTo("#t1"); //將純文字HTNL轉成jQuery物件後，就可呼叫appendTo函式來塞入t1
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <button id="btnGetAll">取得所有資訊</button>
+    <hr />
+    <table id="t1" border="1">
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>BIRTHDAY</th>
+            <th>PHOTO</th>
+        </tr>
+    </table>
+</body>
+</html>
