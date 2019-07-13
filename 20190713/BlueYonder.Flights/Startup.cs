@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+ using BlueYonder.Flights.Models;
+ using Microsoft.EntityFrameworkCore;
 
 namespace BlueYonder.Flights
 {
@@ -26,6 +28,8 @@ namespace BlueYonder.Flights
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            string cs = Configuration.GetConnectionString("defaultConnection");
+            services.AddDbContext<FlightsContext>(opt => opt.UseSqlServer(cs)); // 下中斷點。並於appsettings.json加入ConnectionStrings.defaultConnection設置
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,7 +45,7 @@ namespace BlueYonder.Flights
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
