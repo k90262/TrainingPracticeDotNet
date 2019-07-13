@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
  using BlueYonder.Flights.Models;
  using Microsoft.EntityFrameworkCore;
 
+// https://github.com/MicrosoftLearning/20487D-Developing-Microsoft-Azure-and-Web-Services/blob/master/Instructions/20487D_MOD01_LAK.md
 namespace BlueYonder.Flights
 {
     public class Startup
