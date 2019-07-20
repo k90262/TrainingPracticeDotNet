@@ -28,33 +28,33 @@ namespace DAL.Database
             // Create list with dummy bookings 
             List<Booking> bookingList = new List<Booking>
             {
-                new Booking()
-                {
-                    DateCreated = DateTime.Now,
-                    CheckIn = DateTime.Now,
-                    CheckOut = DateTime.Now.AddDays(2),
-                    Guests = 2,
-                    Paid = true,
-                    Traveler = travelerList[0]
-                },
-                new Booking()
-                {
-                    DateCreated = DateTime.Now.AddDays(3),
-                    CheckIn = DateTime.Now.AddDays(5),
-                    CheckOut = DateTime.Now.AddDays(8),
-                    Guests = 3,
-                    Paid = true,
-                    Traveler = travelerList[1]
-                },
-                new Booking()
-                {
-                    DateCreated = DateTime.Now.AddDays(-10),
-                    CheckIn = DateTime.Now.AddDays(10),
-                    CheckOut = DateTime.Now.AddDays(11),
-                    Guests = 1,
-                    Paid = false,
-                    Traveler = travelerList[2]
-                }
+               new Booking()
+               {
+                   DateCreated = DateTime.Now,
+                   CheckIn = DateTime.Now,
+                   CheckOut = DateTime.Now.AddDays(2),
+                   Guests = 2,
+                   Paid = true,
+                   Traveler = travelerList[0]
+               },
+               new Booking()
+               {
+                   DateCreated = DateTime.Now.AddDays(3),
+                   CheckIn = DateTime.Now.AddDays(5),
+                   CheckOut = DateTime.Now.AddDays(8),
+                   Guests = 3,
+                   Paid = true,
+                   Traveler = travelerList[1]
+               },
+               new Booking()
+               {
+                   DateCreated = DateTime.Now.AddDays(-10),
+                   CheckIn = DateTime.Now.AddDays(10),
+                   CheckOut = DateTime.Now.AddDays(11),
+                   Guests = 1,
+                   Paid = false,
+                   Traveler = travelerList[2]
+               }
             };
 
             // Create list with dummy rooms

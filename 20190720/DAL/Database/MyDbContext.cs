@@ -15,14 +15,7 @@ namespace DAL.Database
             DbInitializer.Initialize(this);
         }
 
-        // Default Constructor
-        public MyDbContext()
-        {
-            InitialDBContext();
-        }
-
-        // Constructor with options
-        public MyDbContext(DbContextOptions<MyDbContext> options)
+        public MyDbContext(DbContextOptions<MyDbContext> options = null)
                 : base(options)
         {
             InitialDBContext();
