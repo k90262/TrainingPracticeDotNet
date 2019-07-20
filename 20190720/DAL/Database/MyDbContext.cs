@@ -10,22 +10,17 @@ namespace DAL.Database
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
 
-        private void InitialDBContext()
+        public MyDbContext()
+                : base()
         {
             DbInitializer.Initialize(this);
-        }
-
-        public MyDbContext(DbContextOptions<MyDbContext> options = null)
-                : base(options)
-        {
-            InitialDBContext();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=Mod2Lab2DB;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=Mod3Lab1DB;Trusted_Connection=True;");
             }
         }
     }

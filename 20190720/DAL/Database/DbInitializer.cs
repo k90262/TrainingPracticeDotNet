@@ -34,7 +34,7 @@ namespace DAL.Database
                    CheckIn = DateTime.Now,
                    CheckOut = DateTime.Now.AddDays(2),
                    Guests = 2,
-                   Paid = true,
+                   Paid = false,
                    Traveler = travelerList[0]
                },
                new Booking()
@@ -43,7 +43,7 @@ namespace DAL.Database
                    CheckIn = DateTime.Now.AddDays(5),
                    CheckOut = DateTime.Now.AddDays(8),
                    Guests = 3,
-                   Paid = true,
+                   Paid = false,
                    Traveler = travelerList[1]
                },
                new Booking()
