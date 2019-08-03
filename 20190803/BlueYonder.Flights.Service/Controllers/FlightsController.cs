@@ -1,39 +1,41 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BlueYonder.Flights.Service.Models;
+using BlueYonder.Flights.Service.Database;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlueYonder.Flights.Service.Controllers
 {
     [Route("api/[controller]")]
-	[ApiController]
+    [ApiController]
     public class FlightsController : ControllerBase
     {
         [HttpGet]
-        // GET api/flights
-        public IEnumerable<Flight> Get()
+        public IEnumerable<Flight> GetAllFlights()
         {
-            return new List<Flight>
+            using (var flightContext = new FlightContext())
             {
-                new Flight
+                var flights = flightContext.Flights.Include(f => f.Travelers).ToList();
+                return flights;
+            }
+        }
+
+        [HttpPost]
+        [Route("BookFlight")]
+        public void BookFlight(int flightId, [FromBody]IEnumerable<Traveler> travelers)
+        {
+            using (var flightContext = new FlightContext())
+            {
+                var flight = flightContext.Flights.FirstOrDefault(f => f.FlightId == flightId);
+                if (flight != null)
                 {
-                    Id = 1,
-                    Origin = "Australia",
-                    Destination = "China",
-                    FlightNumber = "20487DD",
-                    DepartureTime = new DateTime(2018,01,01)
-                },
-                new Flight
-                {
-                    Id = 2,
-                    Origin = "New-York",
-                    Destination = "Paris",
-                    FlightNumber = "20487D",
-                    DepartureTime = new DateTime(2018,02,02)
+                    flight.Travelers = travelers.ToList();
+                    flightContext.SaveChanges();
                 }
-            };
+            }
         }
     }
 }
+
