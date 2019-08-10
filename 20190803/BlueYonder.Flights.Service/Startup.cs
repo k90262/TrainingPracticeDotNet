@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlueYonder.Flights.Service.Formatter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using BlueYonder.Flights.Service.Repository;
 
 namespace BlueYonder.Flights.Service
 {
@@ -25,7 +27,11 @@ namespace BlueYonder.Flights.Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options =>
+            {
+                 options.OutputFormatters.Insert(0, new ImageFormatter());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddTransient<IPassangerRepository, PassangerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

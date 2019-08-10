@@ -5,12 +5,8 @@ using System.Threading.Tasks;
 
 namespace BlueYonder.Flights.Service.Models
 {
-    public class Destination
+    public class ImageUrl
     {
-        public int Id { get; set; }
-
-        public string CityName { get; set; }
-
-        public string Airport { get; set; }
+        public string Url { get; set; }
     }
 }
