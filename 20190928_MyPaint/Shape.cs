@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyPaint
 {
+    [Serializable]
     abstract class Shape
     {
         public int X1 { get; set; }
@@ -15,5 +16,6 @@ namespace MyPaint
         public int Y2 { get; set; }
 
         public abstract void Draw(Form1 f);
+        public abstract Shape Clone();
     }
 }

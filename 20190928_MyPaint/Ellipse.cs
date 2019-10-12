@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyPaint
 {
+    [Serializable]
     class Ellipse : Shape
     {
 
@@ -50,6 +51,11 @@ namespace MyPaint
             int w = Math.Abs(X1 - X2) + 1;
             int h = Math.Abs(Y1 - Y2) + 1;
             g.DrawEllipse(Pens.Red, X, Y, Width, Height);
+        }
+
+        public override Shape Clone()
+        {
+            return new Ellipse();
         }
     }
 }

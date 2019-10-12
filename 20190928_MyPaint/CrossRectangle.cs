@@ -8,18 +8,20 @@ using System.Threading.Tasks;
 namespace MyPaint
 {
     [Serializable]
-    class Line : Shape
+    class CrossRectangle : Rectangle
     {
-
         public override void Draw(Form1 f)
         {
+            base.Draw(f);
+
             Graphics g = f.CreateGraphics();
             g.DrawLine(Pens.Red, X1, Y1, X2, Y2);
+            g.DrawLine(Pens.Red, X2, Y1, X1, Y2);
         }
 
         public override Shape Clone()
         {
-            return new Line();
+            return new CrossRectangle();
         }
     }
 }

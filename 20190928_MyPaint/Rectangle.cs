@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyPaint
 {
+    [Serializable]
     class Rectangle : Shape
     {
 
@@ -46,6 +47,11 @@ namespace MyPaint
         {
             Graphics g = f.CreateGraphics();
             g.DrawRectangle(Pens.Red, X, Y, Width, Height);
+        }
+
+        public override Shape Clone()
+        {
+            return new Rectangle();
         }
     }
 }
