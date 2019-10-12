@@ -104,7 +104,13 @@ namespace MyPaint
                         MessageBox.Show("SAVED");
                         break;
                     case Keys.L:
-                        MessageBox.Show("LOAD");
+                        BinaryFormatter deserializer = new BinaryFormatter();
+                        FileStream fsRead = new FileStream(savedFile, FileMode.Open);
+                        shapes = (List<Shape>)deserializer.Deserialize(fsRead);
+                        fsRead.Close();
+                        this.Invalidate();
+
+                        MessageBox.Show("LOADED");
                         break;
                 }
 
