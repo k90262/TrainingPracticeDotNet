@@ -22,10 +22,13 @@ namespace app3
             // }
             //for (int i=0; i < data.GetUpperBound(0); i++) 
             //for (int i=0; i < data.GetUpperBound(0); i+=2) 
-            for (int i=data.GetUpperBound(0); i >= 0; i--) 
-            {
+            // for (int i=data.GetUpperBound(0); i >= 0; i--) 
+            // {
+            //     Console.WriteLine(data[i]);
+            // }
+            Parallel.For(0, data.Length, i => {
                 Console.WriteLine(data[i]);
-            }
+            });
 
             // Parallel.ForEach<int>(data, Print);
 
