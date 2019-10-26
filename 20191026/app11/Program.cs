@@ -9,9 +9,11 @@ namespace app11
         static void Main(string[] args)
         {
             FileStream fs = new FileStream(@"C:\Demos\test.txt", FileMode.Open);
-
+            byte[] buffer = new byte[fs.Length];
+            fs.Read(buffer, 0, buffer.Length);
             fs.Close();
-            Console.WriteLine("OK");
+            string s = Encoding.UTF7.GetString(buffer);
+            Console.WriteLine(s);
         }
     }
 }
