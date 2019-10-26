@@ -8,6 +8,9 @@ namespace app8
         {
             int[] data = {21, 35, 12, 8, 6, 99, 19};
             data.Show();
+
+            Array.Sort(data, new Comparer());
+            data.Show();
         }
     }
 }
