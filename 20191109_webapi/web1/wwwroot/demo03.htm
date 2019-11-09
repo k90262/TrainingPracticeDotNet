@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <meta charset="UTF-8"> <!--head block內不用對稱-->
+        <script src="jquery-3.4.1.min.js"></script>
+        <script>
+            $(function(){
+                $("#btn").click(function(){
+                    $("<tr><td>AAA</td></td>").appendTo("#t1");  // demo of DATA.appendTo(CONTAINER)
+                    $("#t1").append($("<tr><td>BBB</td></td>")); // demo of CONTAINER.append(DATA)
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <button id="btn">按我</button>
+        <table border="1" id="t1">
+
+        </table>
+    </body>
+</html>
