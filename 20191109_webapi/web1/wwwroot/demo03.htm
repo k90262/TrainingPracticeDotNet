@@ -14,7 +14,11 @@
                         for(var c=0; c<w; c++) {
                             $("<td />").click(function(){
                                 var no = $(this).text();
-                                alert(no);
+                                $("#result").text( $("#result").text() + no  + ", " );
+
+                                var total = parseInt($("#total").text());
+                                total += parseInt(no);
+                                $("#total").text(total);
                             }).text(r*w+c+1).appendTo(tr);
                         }
                         tr.appendTo("#t1");
@@ -24,7 +28,9 @@
         </script>
     </head>
     <body>
-        <button id="btn">按我</button>
+        <button id="btn">按我</button><br />
+        Total=<span id="total">0</span><br />
+        <span id="result"></span>
         <table border="1" id="t1">
 
         </table>
