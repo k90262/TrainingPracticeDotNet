@@ -3,10 +3,19 @@
         <meta charset="UTF-8"> <!--head block內不用對稱-->
         <script src="jquery-3.4.1.min.js"></script>
         <script>
+            var w = 20;
+            var h = 6;
             $(function(){
                 $("#btn").click(function(){
-                    $("<tr><td>AAA</td></td>").appendTo("#t1");  // demo of DATA.appendTo(CONTAINER)
-                    $("#t1").append($("<tr><td>BBB</td></td>")); // demo of CONTAINER.append(DATA)
+                    // $("<tr><td>AAA</td></td>").appendTo("#t1");  // demo of DATA.appendTo(CONTAINER)
+                    // $("#t1").append($("<tr><td>BBB</td></td>")); // demo of CONTAINER.append(DATA)
+                    for(var r=0; r<h; r++) { // w x h table
+                        var tr = $("<tr />");
+                        for(var c=0; c<w; c++) {
+                            $("<td />").text(r*w+c+1).appendTo(tr);
+                        }
+                        tr.appendTo("#t1");
+                    }
                 });
             });
         </script>
