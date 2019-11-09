@@ -3,18 +3,25 @@
         <meta charset="UTF-8"/> <!-- google: html encoding  -->
         <script src="jquery-3.4.1.min.js"></script>
         <script>
-            // alert("OK"); // show alert before rendering body
-            // function load() {alert("OK")}
+
             $(function(){
-                alert("OK"); // show alert after rendering body
+                // document.getElementById("btn").hidden = true; // tranditional way to get element by id
+                // $("#btn").hide("slow").show("slow");
+                $("#btn").click(function() { // jquery way to get element by id
+                    // alert("Length " + $("#no1").length + ": " + $("#no1")[0].value); // ouput is an array from selector output of jquery
+                    //alert($("#no1").val() + 10); // proving type: $("#no1").val() is string 
+                    var n1 = parseFloat( $("#no1").val() );
+                    var n2 = parseFloat( $("#no2").val() );
+                    var ans = n1 + n2;
+                    $("#answer").text(ans);
+                });
             });
         </script>
     </head>
-    <!--<body onload="load()">--> <!--show alert after rendering body-->
     <body>
         No1: <input type="number" id="no1" /><br />
         No2: <input type="number" id="no2" /><br />
         <input type="button" value="計算" id="btn" /><br />
-        Answer: <span id="answer">100</span>
+        Answer: <span id="answer"></span>
     </body>
 </html>
