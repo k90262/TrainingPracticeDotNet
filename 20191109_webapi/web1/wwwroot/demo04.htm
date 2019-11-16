@@ -15,7 +15,7 @@
 
         <script>
 
-            var w = 12;
+            var w = 8;
             var h = 6;
 
             $(function () {
@@ -47,6 +47,19 @@
                     $(this).find("td:gt(1)").remove();
                 });
 
+                $("#t1 tr:first td").each(function(i) {
+                    $(this).text(i+1);
+                });
+
+                $("#t1 tr:last td").each(function(i) {
+                    $(this).text(2*w+h-2-i);
+                });
+
+                $(`#t1 tr:gt(0):lt(${h-2})`).each(function(i) {
+                   $(this)
+                        .find("td:last").text(w+1+i)
+                        .prev().text(2*w+2*h-4-i);
+                });
                 // $("#t1 tr:eq(1)").hide("slow"); // make sure we select the 2nd row we want
                 // $("#t1 tr:eq(1) td:first").hide("slow"); // make sure we select the first td of the 2nd row
                 // $("<td />").text("AA").insertAfter($("#t1 tr:eq(1) td:first")); // insert a td after the first td of the 2nd row
