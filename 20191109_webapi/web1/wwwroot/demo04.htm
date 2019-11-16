@@ -16,10 +16,9 @@
         <script>
 
             var w = 8;
-            var h = 6;
+            var h = 8;
 
             $(function () {
-
                 for (var i = 0; i < h; i++) {
                     var tr = $("<tr/>");
                     for (var j = 0; j < w; j++) {
@@ -27,16 +26,26 @@
                     }
                     tr.appendTo("#t1");
                 }
-
-                $(`#t1 tr:gt(0):lt(${h-2})`).each(function(){
+                // alert("OK"); // make sure not in loop
+                // $("#t1").hide("slow");
+                // $("#t1 tr").hide("slow");
+                // $("#t1 tr:gt(0)").hide("slow");
+                // $("#t1 tr:gt(0):lt(6)").hide("slow");
+                // $(`#t1 tr:gt(0):lt(6)`).hide("slow"); // allow using var
+                // $(`#t1 tr:gt(0):lt(${6})`).hide("slow"); // allow using var and use it with a constant value
+                // $(`#t1 tr:gt(0):lt(${h-2})`).hide("slow"); // allow using var and use it 
+                // $(`#t1 tr:gt(0):lt(${h-2}) td`).hide("slow"); // hide td only
+                // $(`#t1 tr:gt(0):lt(${h-2}) td:gt(4)`).hide("slow"); // hide td of some columns only (failure case, elements is be totalize, and not )
+                // $(`#t1 tr:gt(0):lt(${h-2}) td`).hide("slow"); // hide td of some columns only (rollback)
+                $(`#t1 tr:gt(0):lt(${h-2})`).each(function() {
+                    // alert("OK");
+                    // $(this).css("background-color", "blue"); // should remove td css at first
+                    // $(this).find("td").css("background-color", "black"); // just test for overfide td style
+                    // $(this).hide("slow");
+                    // $(this).find("td").text("AA");
+                    // $(this).find("td:gt(1)").text("AA");
                     $(this).find("td:gt(1)").remove();
                 });
-
-                $(`<td colspan="${w-2}" rowspan="${h-2}" />`).insertAfter(
-                    $("#t1 tr:eq(1) td:first")
-                );
-
-
             });
 
         </script>
