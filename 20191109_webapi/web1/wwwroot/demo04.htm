@@ -15,8 +15,8 @@
 
         <script>
 
-            var w = 8;
-            var h = 8;
+            var w = 12;
+            var h = 6;
 
             $(function () {
                 for (var i = 0; i < h; i++) {
@@ -42,10 +42,17 @@
                     // $(this).css("background-color", "blue"); // should remove td css at first
                     // $(this).find("td").css("background-color", "black"); // just test for overfide td style
                     // $(this).hide("slow");
-                    // $(this).find("td").text("AA");
-                    // $(this).find("td:gt(1)").text("AA");
+                    // $(this).find("td").text("AA"); // test td we will delete by mark with text
+                    // $(this).find("td:gt(1)").text("AA"); // test td of colums we will delete by mark with text
                     $(this).find("td:gt(1)").remove();
                 });
+
+                // $("#t1 tr:eq(1)").hide("slow"); // make sure we select the 2nd row we want
+                // $("#t1 tr:eq(1) td:first").hide("slow"); // make sure we select the first td of the 2nd row
+                // $("<td />").text("AA").insertAfter($("#t1 tr:eq(1) td:first")); // insert a td after the first td of the 2nd row
+                // $(`<td colspan="4" rowspan="5"/>`).text("AA").insertAfter($("#t1 tr:eq(1) td:first")); // insert a td after the first td of the 2nd row
+                // $(`<td colspan="${6}" rowspan="${6}"/>`).text("AA").insertAfter($("#t1 tr:eq(1) td:first")); // insert a td with format string 
+                $(`<td colspan="${w-2}" rowspan="${h-2}"/>`).insertAfter($("#t1 tr:eq(1) td:first")); // insert a td with format string with var
             });
 
         </script>
