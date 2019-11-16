@@ -53,6 +53,7 @@
                     $(this).find("td:gt(1)").remove();
                 });
 
+                /* assign number into cell */
                 $("#t1 tr:first td").each(function(i) {
                     $(this).text(i+1);
                 });
@@ -66,6 +67,17 @@
                         .find("td:last").text(w+1+i)
                         .prev().text(2*w+2*h-4-i);
                 });
+
+                /* sorted td as array */
+                var sorted = $("#t1 td").sort(function(a, b) { // sorted td by innertext of td DOM
+                    var x = parseInt(a.innerText);
+                    var y = parseInt(b.innerText);
+                    return x-y;
+                });
+
+                for(var i=0; i<sorted.length; i++) { // test the result of sorted
+                    sorted[i].innerText =i+5;
+                }
                 // $("#t1 tr:eq(1)").hide("slow"); // make sure we select the 2nd row we want
                 // $("#t1 tr:eq(1) td:first").hide("slow"); // make sure we select the first td of the 2nd row
                 // $("<td />").text("AA").insertAfter($("#t1 tr:eq(1) td:first")); // insert a td after the first td of the 2nd row
@@ -73,7 +85,17 @@
                 // $(`<td colspan="${6}" rowspan="${6}"/>`).text("AA").insertAfter($("#t1 tr:eq(1) td:first")); // insert a td with format string 
                 $(`<td colspan="${w-2}" rowspan="${h-2}"/>`).insertAfter($("#t1 tr:eq(1) td:first")); // insert a td with format string with var
             
-                $("#t1 td:eq(20)").addClass("current");
+                $("#btn").click(function() {
+                    // alert("A");
+                    var i = 0;
+                    setInterval(() => {
+                        $(sorted[i]).removeClass("current");
+                        i++;
+                        if (i >= sorted.length) i = 0;
+                        $(sorted[i]).addClass("current");
+                    }, 100);
+                });
+
             });
 
         </script>
