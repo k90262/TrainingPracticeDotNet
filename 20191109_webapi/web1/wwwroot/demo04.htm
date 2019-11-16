@@ -24,7 +24,24 @@
             var w = 8;
             var h = 6;
 
+            var sorted;
+            var delay = 10;
+
+            var id = 0;
+            function loop() {
+                /* go to the next (switch class) */
+                $(sorted[id]).removeClass("current");
+                id++;
+                if (id >= sorted.length) id = 0;
+                $(sorted[id]).addClass("current");
+                
+                /* looping timeout with 0.05% delay */
+                delay *= 1.05;
+                setTimeout(loop, delay);
+            }
+
             $(function () {
+                /* create h x w table */
                 for (var i = 0; i < h; i++) {
                     var tr = $("<tr/>");
                     for (var j = 0; j < w; j++) {
@@ -32,24 +49,8 @@
                     }
                     tr.appendTo("#t1");
                 }
-                // alert("OK"); // make sure not in loop
-                // $("#t1").hide("slow");
-                // $("#t1 tr").hide("slow");
-                // $("#t1 tr:gt(0)").hide("slow");
-                // $("#t1 tr:gt(0):lt(6)").hide("slow");
-                // $(`#t1 tr:gt(0):lt(6)`).hide("slow"); // allow using var
-                // $(`#t1 tr:gt(0):lt(${6})`).hide("slow"); // allow using var and use it with a constant value
-                // $(`#t1 tr:gt(0):lt(${h-2})`).hide("slow"); // allow using var and use it 
-                // $(`#t1 tr:gt(0):lt(${h-2}) td`).hide("slow"); // hide td only
-                // $(`#t1 tr:gt(0):lt(${h-2}) td:gt(4)`).hide("slow"); // hide td of some columns only (failure case, elements is be totalize, and not )
-                // $(`#t1 tr:gt(0):lt(${h-2}) td`).hide("slow"); // hide td of some columns only (rollback)
+                /* remove the td in the middle of table */
                 $(`#t1 tr:gt(0):lt(${h-2})`).each(function() {
-                    // alert("OK");
-                    // $(this).css("background-color", "blue"); // should remove td css at first
-                    // $(this).find("td").css("background-color", "black"); // just test for overfide td style
-                    // $(this).hide("slow");
-                    // $(this).find("td").text("AA"); // test td we will delete by mark with text
-                    // $(this).find("td:gt(1)").text("AA"); // test td of colums we will delete by mark with text
                     $(this).find("td:gt(1)").remove();
                 });
 
@@ -69,32 +70,17 @@
                 });
 
                 /* sorted td as array */
-                var sorted = $("#t1 td").sort(function(a, b) { // sorted td by innertext of td DOM
+                sorted = $("#t1 td").sort(function(a, b) { // sorted td by innertext of td DOM
                     var x = parseInt(a.innerText);
                     var y = parseInt(b.innerText);
                     return x-y;
                 });
 
-                for(var i=0; i<sorted.length; i++) { // test the result of sorted
-                    sorted[i].innerText =i+5;
-                }
-                // $("#t1 tr:eq(1)").hide("slow"); // make sure we select the 2nd row we want
-                // $("#t1 tr:eq(1) td:first").hide("slow"); // make sure we select the first td of the 2nd row
-                // $("<td />").text("AA").insertAfter($("#t1 tr:eq(1) td:first")); // insert a td after the first td of the 2nd row
-                // $(`<td colspan="4" rowspan="5"/>`).text("AA").insertAfter($("#t1 tr:eq(1) td:first")); // insert a td after the first td of the 2nd row
-                // $(`<td colspan="${6}" rowspan="${6}"/>`).text("AA").insertAfter($("#t1 tr:eq(1) td:first")); // insert a td with format string 
+                /* insert span td */
                 $(`<td colspan="${w-2}" rowspan="${h-2}"/>`).insertAfter($("#t1 tr:eq(1) td:first")); // insert a td with format string with var
             
-                $("#btn").click(function() {
-                    // alert("A");
-                    var i = 0;
-                    setInterval(() => {
-                        $(sorted[i]).removeClass("current");
-                        i++;
-                        if (i >= sorted.length) i = 0;
-                        $(sorted[i]).addClass("current");
-                    }, 100);
-                });
+                /* define click function to run */
+                $("#btn").click(loop);
 
             });
 
