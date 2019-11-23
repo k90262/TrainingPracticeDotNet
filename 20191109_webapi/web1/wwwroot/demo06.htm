@@ -12,7 +12,7 @@
                     var app = new Vue({
                         el: '#t1',
                         data: {
-                            obj: result.devices[0]
+                            aq: result.devices
                         }
                     })
                 });
@@ -34,7 +34,7 @@
             <th>PM2.5</th>
             <th>時間</th>
         </tr>
-        <tr>
+        <tr v-for="obj in aq">
             <td>{{ obj.id }}</td>
             <td>{{ obj.name }}</td>
             <td>{{ obj.lon }}</td>
