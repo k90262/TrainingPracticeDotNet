@@ -15,8 +15,10 @@
         }
         $(function () {
             $("#btn").click(function () {
+                /* get json data */
                 $.getJSON("https://scidm.nchc.org.tw/zh_TW/dataset/7a23dd3e-642c-4a0e-8cb9-3793ff64948b/resource/82f5c54e-2042-4a34-b694-8c3638536a2e/nchcproxy/airboxdata.json", function (result) {
                     var dev = result.devices;
+                    /* insert to table by vuejs object + 'v-for' attribute */
                     var app = new Vue({
                         el: '#t1',
                         data: {
@@ -24,17 +26,35 @@
                         }
                     })
 
+                    /* Add marker one by one in googe map (google map api + position info: lat, lon) */
                     for (var i=0; i<dev.length; i++) {
                         // https://developers.google.com/maps/documentation/javascript/adding-a-google-map
                         var pos = {lat: dev[i].lat, lng: dev[i].lon};
                         var marker = new google.maps.Marker({position: pos, map: map, title: dev[i].name});
 
-                        var infowindow = new google.maps.InfoWindow({
-                            content: "<b>Hello</b>",
-                            position: pos,
-                            maxWidth:200,
+                        marker.info = new google.maps.InfoWindow({
+                            content: `<b>Hello#${i}</b>`,
                         });
-                        infowindow.open(map,marker);
+                        marker.infoOpened = false;
+                        // marker.addListener('click', function() {
+                        //     if (this.infoOpened)
+                        //         this.info.close();
+                        //     else
+                        //         this.info.open(map,this);
+                        //     this.infoOpened = !this.infoOpened;
+                        // });
+                        marker.addListener('click', function() {
+                            (marker.infoOpened = !marker.infoOpened) ? this.info.open(map,this) : this.info.close();
+                        });
+
+                        marker.addListener('mouseover', function() {
+                            this.info.open(map,this);
+                            marker.infoOpened = true;
+                        });
+                        marker.addListener('mouseout', function() {
+                            this.info.close();
+                            marker.infoOpened = false;
+                        });
                     }
                 });
             });
@@ -48,6 +68,7 @@
     <button id="btn">按我</button>
     <!--OPEN DATA (JSON) API           https://data.taipei/#/dataset/detail?id=8a569b5b-0cb1-4c7f-a064-780b3301354c-->
     <!--OPEN DATA (JSON) API (有經緯度) https://scidm.nchc.org.tw/zh_TW/dataset/4ba06157-3854-4111-9383-3b8a188c962a-->
+    <!--Googe Map-->
     <div id="map" style="width: 500px; height: 400px;"></div>
     <table id="t1" border="1">
         <tr>
