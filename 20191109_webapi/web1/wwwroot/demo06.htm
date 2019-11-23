@@ -7,14 +7,14 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script>
         $(function () {
-            var app = new Vue({
-                el: '#app',
-                data: {
-                    message: 'Hello Vue!'
-                }
-            })
             $("#btn").click(function () {
                 $.getJSON("https://scidm.nchc.org.tw/zh_TW/dataset/7a23dd3e-642c-4a0e-8cb9-3793ff64948b/resource/82f5c54e-2042-4a34-b694-8c3638536a2e/nchcproxy/airboxdata.json", function (result) {
+                    var app = new Vue({
+                        el: '#t1',
+                        data: {
+                            obj: result.devices[0]
+                        }
+                    })
                 });
             });
         });
@@ -22,9 +22,6 @@
 </head>
 
 <body>
-    <div id="app">
-        {{ message }}
-    </div>
     <button id="btn">按我</button>
     <!--OPEN DATA (JSON) API           https://data.taipei/#/dataset/detail?id=8a569b5b-0cb1-4c7f-a064-780b3301354c-->
     <!--OPEN DATA (JSON) API (有經緯度) https://scidm.nchc.org.tw/zh_TW/dataset/4ba06157-3854-4111-9383-3b8a188c962a-->
@@ -36,6 +33,14 @@
             <th>緯度</th>
             <th>PM2.5</th>
             <th>時間</th>
+        </tr>
+        <tr>
+            <td>{{ obj.id }}</td>
+            <td>{{ obj.name }}</td>
+            <td>{{ obj.lon }}</td>
+            <td>{{ obj.lat }}</td>
+            <td>{{ obj.pm25 }}</td>
+            <td>{{ obj.time }}</td>
         </tr>
     </table>
 </body>
