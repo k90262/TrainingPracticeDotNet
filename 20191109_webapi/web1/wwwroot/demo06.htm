@@ -9,25 +9,33 @@
         var map;
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: -34.397, lng: 150.644 },
-                zoom: 8
+                center: { lat: 25.112123, lng: 121.521788 },
+                zoom: 11
             });
         }
         $(function () {
             $("#btn").click(function () {
                 $.getJSON("https://scidm.nchc.org.tw/zh_TW/dataset/7a23dd3e-642c-4a0e-8cb9-3793ff64948b/resource/82f5c54e-2042-4a34-b694-8c3638536a2e/nchcproxy/airboxdata.json", function (result) {
+                    var dev = result.devices;
                     var app = new Vue({
                         el: '#t1',
                         data: {
-                            aq: result.devices
+                            aq: dev
                         }
                     })
+
+                    for (var i=0; i<dev.length; i++) {
+                        // https://developers.google.com/maps/documentation/javascript/adding-a-google-map
+                        var pos = {lat: dev[i].lat, lng: dev[i].lon};
+                        var marker = new google.maps.Marker({position: pos, map: map});
+                    }
+
                 });
             });
         });
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-CadqFq662RdP5L9NEZqPg780ErnrGVg&callback=initMap"
-    async defer></script><!--teacher's key-->
+    async defer></script><!--teacher's key. https://cloud.google.com/maps-platform/user-guide/account-changes/#no-plan -->
 </head>
 
 <body>
