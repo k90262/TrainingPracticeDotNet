@@ -8,9 +8,30 @@
                     $.getJSON("https://scidm.nchc.org.tw/zh_TW/dataset/7a23dd3e-642c-4a0e-8cb9-3793ff64948b/resource/82f5c54e-2042-4a34-b694-8c3638536a2e/nchcproxy/airboxdata.json"
                     , function(result){
                         //alert(result.devices.length); // array has length property
-                        var devices = result.devices;
-                        for (var i=0; i<devices.length; i++) {
-                            alert(devices[i].name);
+                        // var devices = result.devices;
+                        // for (var i=0; i<devices.length; i++) {
+                            //alert(devices[i].name);
+                            // var tmp_tr = $("<tr />");
+                            // tmp_tr.append($("<td />").text(devices[i].id))
+                            //     .append($("<td />").text(devices[i].name))
+                            //     .append($("<td />").text(devices[i].lon))
+                            //     .append($("<td />").text(devices[i].lat))
+                            //     .append($("<td />").text(devices[i].pm25))
+                            //     .append($("<td />").text(devices[i].time));
+                            // tmp_tr.appendTo("#t1");
+                        // }
+
+                        for (var i=0; i<result.devices.length; i++) {
+                            var obj = result.devices[i];
+                            //alert(obj.name);
+                            $(`<tr>
+                                <td>${obj.id}</td>
+                                <td>${obj.name}</td>
+                                <td>${obj.lon}</td>
+                                <td>${obj.lat}</td>
+                                <td>${obj.pm25}</td>
+                                <td>${obj.time}</td>
+                            <tr/>`).appendTo("#t1");
                         }
                     });
                 });
@@ -21,5 +42,15 @@
         <button id="btn">按我</button>
         <!--OPEN DATA (JSON) API           https://data.taipei/#/dataset/detail?id=8a569b5b-0cb1-4c7f-a064-780b3301354c-->
         <!--OPEN DATA (JSON) API (有經緯度) https://scidm.nchc.org.tw/zh_TW/dataset/4ba06157-3854-4111-9383-3b8a188c962a-->
+        <table id="t1" border="1">
+            <tr>
+                <th>編號</th>
+                <th>名稱</th>
+                <th>經度</th>
+                <th>緯度</th>
+                <th>PM2.5</th>
+                <th>時間</th>
+            </tr>
+        </table>
     </body>
 </html>

@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <meta charset="UTF-8"> <!--head block內不用對稱-->
+        <script src="jquery-3.4.1.min.js"></script>
+        <script>
+            $(function(){
+                $("#btn").click(function(){
+                    $.getJSON("https://scidm.nchc.org.tw/zh_TW/dataset/7a23dd3e-642c-4a0e-8cb9-3793ff64948b/resource/82f5c54e-2042-4a34-b694-8c3638536a2e/nchcproxy/airboxdata.json", function(result){
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <button id="btn">按我</button>
+        <!--OPEN DATA (JSON) API           https://data.taipei/#/dataset/detail?id=8a569b5b-0cb1-4c7f-a064-780b3301354c-->
+        <!--OPEN DATA (JSON) API (有經緯度) https://scidm.nchc.org.tw/zh_TW/dataset/4ba06157-3854-4111-9383-3b8a188c962a-->
+        <table id="t1" border="1">
+            <tr>
+                <th>編號</th>
+                <th>名稱</th>
+                <th>經度</th>
+                <th>緯度</th>
+                <th>PM2.5</th>
+                <th>時間</th>
+            </tr>
+        </table>
+    </body>
+</html>
