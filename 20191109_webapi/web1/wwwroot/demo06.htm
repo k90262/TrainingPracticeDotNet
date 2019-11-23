@@ -27,9 +27,15 @@
                     for (var i=0; i<dev.length; i++) {
                         // https://developers.google.com/maps/documentation/javascript/adding-a-google-map
                         var pos = {lat: dev[i].lat, lng: dev[i].lon};
-                        var marker = new google.maps.Marker({position: pos, map: map});
-                    }
+                        var marker = new google.maps.Marker({position: pos, map: map, title: dev[i].name});
 
+                        var infowindow = new google.maps.InfoWindow({
+                            content: "<b>Hello</b>",
+                            position: pos,
+                            maxWidth:200,
+                        });
+                        infowindow.open(map,marker);
+                    }
                 });
             });
         });
