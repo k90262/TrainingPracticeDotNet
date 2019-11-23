@@ -28,6 +28,7 @@
             var delay = 10;
 
             var id = 0;
+            var count = (w+h)*2*5 + Math.random() * 50;
             function loop() {
                 /* go to the next (switch class) */
                 $(sorted[id]).removeClass("current");
@@ -36,8 +37,9 @@
                 $(sorted[id]).addClass("current");
                 
                 /* looping timeout with 0.05% delay */
-                delay *= 1.05;
-                setTimeout(loop, delay);
+                delay *= 1.02;
+                if (--count > 0)
+                    setTimeout(loop, delay);
             }
 
             $(function () {
