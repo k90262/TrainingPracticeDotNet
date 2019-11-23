@@ -5,7 +5,14 @@
         <script>
             $(function(){
                 $("#btn").click(function(){
-                    alert("OK");
+                    $.getJSON("https://scidm.nchc.org.tw/zh_TW/dataset/7a23dd3e-642c-4a0e-8cb9-3793ff64948b/resource/82f5c54e-2042-4a34-b694-8c3638536a2e/nchcproxy/airboxdata.json"
+                    , function(result){
+                        //alert(result.devices.length); // array has length property
+                        var devices = result.devices;
+                        for (var i=0; i<devices.length; i++) {
+                            alert(devices[i].name);
+                        }
+                    });
                 });
             });
         </script>
