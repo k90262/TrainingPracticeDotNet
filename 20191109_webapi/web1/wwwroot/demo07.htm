@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <!--head block內不用對稱-->
     <script src="jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script>
         $(function () {
             $("#btn").click(function () {
-                alert("OK");
+                $.getJSON("	https://data.taipei/api/getDatasetInfo/downloadResource?id=8a569b5b-0cb1-4c7f-a064-780b3301354c&rid=9744ea1c-aafb-471c-8bb8-04f398ad415a", function(result) {
+                    //alert(result[0].夜市名稱);
+                    var app = new Vue({
+                        el: "#t1",
+                        data: {
+                            rslist: result
+                        }
+                    });
+                });
             });
         });
     </script>
@@ -17,6 +25,22 @@
 <body>
     <!--OPEN DATA (JSON) API           https://data.taipei/#/dataset/detail?id=8a569b5b-0cb1-4c7f-a064-780b3301354c-->
     <button id="btn">按我</button>
+    <table id="t1" border="1">
+        <tr>
+            <th>夜市名稱</th>
+            <th>所在位置</th>
+            <th>營業時間</th>
+            <th>交通資訊</th>
+            <th>夜市簡介</th>
+        </tr>
+        <tr v-for="obj in rslist">
+            <td>{{ obj.夜市名稱 }}</td>
+            <td>{{ obj.所在位置 }}</td>
+            <td>{{ obj.營業時間 }}</td>
+            <td>{{ obj.交通資訊 }}</td>
+            <td>{{ obj.夜市簡介 }}</td>
+        </tr>
+    </table>
 </body>
 
 </html>
