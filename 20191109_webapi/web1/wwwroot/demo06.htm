@@ -2,12 +2,20 @@
     <head>
         <meta charset="UTF-8"> <!--head block內不用對稱-->
         <script src="jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
         <script>
             $(function(){
                 $("#btn").click(function(){
                     $.getJSON("https://scidm.nchc.org.tw/zh_TW/dataset/7a23dd3e-642c-4a0e-8cb9-3793ff64948b/resource/82f5c54e-2042-4a34-b694-8c3638536a2e/nchcproxy/airboxdata.json", function(result){
                     });
                 });
+
+                var app = new Vue({
+                    el: '#app',
+                    data: {
+                        message: 'Hello Vue!'
+                    }
+                })
             });
         </script>
     </head>
@@ -25,5 +33,9 @@
                 <th>時間</th>
             </tr>
         </table>
+
+        <div id="app">
+            {{ message }}
+          </div>
     </body>
 </html>
