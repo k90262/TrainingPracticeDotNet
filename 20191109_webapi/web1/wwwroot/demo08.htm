@@ -5,12 +5,24 @@
         <script>
             $(function(){
                 $("#btn").click(function(){
-                    alert("OK");
+                    var no = parseInt($("#no").val());
+                    // $("<td />").text(no).appendTo("#tr1");
+                    var w = new Worker("worker.js");
+                    w.onmessage = function(e) {
+                        $("<td />").text(e.data).appendTo("#tr1");
+                    }
+                    w.postMessage(no);
                 });
             });
         </script>
     </head>
     <body>
+        <h1>Demo08 - background job</h1>
+        <input id=no />
         <button id="btn">按我</button>
+        <hr />
+        <table border="1">
+            <tr id="tr1"></tr>
+        </table>
     </body>
 </html>
