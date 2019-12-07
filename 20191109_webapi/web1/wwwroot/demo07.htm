@@ -7,14 +7,27 @@
 
         <script>
         
+            var count = 10;
+            var balls = [];
+
+            // var a = Math.random().toString(16).substr(2, 6);
+            // alert(a);
+
             $(function(){
 
                 $("#btn").click(function(){
                     // google 'html5 canvas'
                     /** @type {CanvasRenderingContext2D} */
                     var ctx = $("#c1")[0].getContext("2d"); // jquery object ( $("#c1") ) to html object( $("#c1")[0] )
-                    var b = new Ball(ctx, 300, 300, 100, "blue", 5, 10);
-                    b.show();
+                    for(var i=0; i<count; i++) {
+                        var x = Math.random() * 500 + 100;
+                        var y = Math.random() * 400 + 100;
+                        var r = Math.random() * 50 + 20;
+                        var c = "#"+Math.random().toString(16).substr(2, 6);
+                        //balls[balls.length] = new Ball(ctx, x, y, r, "blue", 5, 10);
+                        balls[i] = new Ball(ctx, x, y, r, c, 5, 10);
+                        balls[i].show();
+                    }
 
                 });
                 
