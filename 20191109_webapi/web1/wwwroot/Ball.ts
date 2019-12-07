@@ -17,6 +17,13 @@ class Ball {
     move() {
         this.x += this.dx;
         this.y += this.dy;
+
+        // collision and rebound
+        if (this.x - this.r <= 0 || this.x + this.r >= this.ctx.canvas.width)
+            this.dx = -this.dx;
+        
+        if (this.y - this.r <= 0 || this.y + this.r >= this.ctx.canvas.height)
+            this.dy = -this.dy;
     }
 
     show() {
