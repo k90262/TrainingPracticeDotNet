@@ -8,7 +8,8 @@
 // compile command (.ts -> .js):
 // tsc .\wwwroot\Ball.ts
 var Ball = /** @class */ (function () {
-    function Ball(x, y, r, c, dx, dy) {
+    function Ball(ctx, x, y, r, c, dx, dy) {
+        this.ctx = ctx;
         this.x = x;
         this.y = y;
         this.r = r;
@@ -22,12 +23,19 @@ var Ball = /** @class */ (function () {
     };
     Ball.prototype.show = function () {
         console.log("(" + this.x + ", " + this.y + ")");
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+        this.ctx.closePath();
+        this.ctx.fillStyle = this.c;
+        this.ctx.fill();
     };
     return Ball;
 }());
-var obj = new Ball(300, 200, 50, "blue", 5, 10);
-for (var i = 0; i < 10; i++) {
-    obj.move();
-    obj.show();
-}
-alert(obj.c);
+// test only
+//
+// let obj = new Ball(300, 200, 50, "blue", 5, 10);
+// for(var i=0; i<10; i++) {
+//     obj.move();
+//     obj.show();
+// }
+// alert(obj.c);

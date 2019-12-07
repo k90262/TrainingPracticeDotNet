@@ -13,19 +13,9 @@
                     // google 'html5 canvas'
                     /** @type {CanvasRenderingContext2D} */
                     var ctx = $("#c1")[0].getContext("2d"); // jquery object ( $("#c1") ) to html object( $("#c1")[0] )
-                    //ctx.fillRect(100, 50, 80, 50);
-                    
-                    ctx.beginPath();
-                    ctx.arc(200, 100, 50, 0, 2*Math.PI);
-                    ctx.rect(300, 50, 200, 100);
-                    ctx.closePath();
+                    var b = new Ball(ctx, 300, 300, 100, "blue", 5, 10);
+                    b.show();
 
-                    ctx.fillStyle ="red";
-                    ctx.fill();
-
-                    ctx.strokeStyle="blue";
-                    ctx.lineWidth=5;
-                    ctx.stroke();
                 });
                 
             });
