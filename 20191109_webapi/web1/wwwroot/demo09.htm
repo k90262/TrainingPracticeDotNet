@@ -28,8 +28,8 @@
             };
         }
 
-        function openStore(name, callback){
-            openDB(function(db) {
+        function openStore(name, callback) {
+            openDB(function (db) {
                 var transaction = db.transaction(name, "readwrite");
                 var objectStore = transaction.objectStore(name);
                 callback(objectStore);
@@ -41,12 +41,25 @@
                 var transaction = db.transaction(["contacts"], "readwrite");
                 var objectStore = transaction.objectStore("contacts");
 
-                var app = new Vue({
-                    el: '#t1',
-                    data: {
-                        contacts: []
+                /* use cursor to dump data in the target store */
+                var contacts = [];
+                objectStore.openCursor().onsuccess = function (event) {
+                    var cursor = event.target.result;
+                    if (cursor) {
+                        //alert(cursor.value.name)
+                        contacts.push(cursor.value);
+                        cursor.continue();
                     }
-                });
+                    else {
+                        //alert(contacts.length);
+                        var app = new Vue({
+                            el: '#t1',
+                            data: {
+                                contacts: contacts
+                            }
+                        });
+                    }
+                };
             });
         }
 
