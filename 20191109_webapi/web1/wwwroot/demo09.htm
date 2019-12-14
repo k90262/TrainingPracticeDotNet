@@ -6,13 +6,27 @@
         <script>
             $(function(){
                 $("#btnAdd").click(function(){
-                    alert("OK");
+                    var obj = {
+                        name: $("#name").val(),
+                        phone: $("#phone").val(),
+                        age: $("#age").val()
+                    }
+                    //alert(`${obj.name}, ${obj.phone}, ${obj.age} `);
+                    var db;
+                    var request = indexedDB.open("DB123");
+                    request.onerror = function(event) {
+                        alert("Why didn't you allow my web app to use IndexedDB?!");
+                    };
+                    request.onsuccess = function(event) {
+                        db = request.result;
+                        alert(db.name);
+                    };
                 });
             });
         </script>
     </head>
     <body>
-        Name: <input type="text" id="name"/> <br />
+        Name: <input type="text" id="name" value="test"/> <br />
         Phone: <input type="text" id="phone"/> <br />
         age: <input type="text" id="age"/> <br />
         <button id="btnAdd">新增聯絡人</button>
