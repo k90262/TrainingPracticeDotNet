@@ -5,16 +5,41 @@
     <meta charset="UTF-8">
     <!--head block內不用對稱-->
     <script src="jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script>
+        function show() {
+            var app = new Vue({
+                el: '#t1',
+                data: {
+                    contacts: [
+                        {
+                            name: "Peter",
+                            phone: "0923-555555",
+                            age: 20
+                        },
+                        {
+                            name: "Peter2",
+                            phone: "0955-555555",
+                            age: 30
+                        }
+                    ]
+                }
+            });
+        }
+
         $(function () {
+            show();
+
             $("#btnAdd").click(function () {
                 var obj = {
                     name: $("#name").val(),
                     phone: $("#phone").val(),
                     age: $("#age").val()
                 }
+                /* open db */
                 var db;
                 var reqDB = indexedDB.open("DB123"); // google indexdb -> MDN
+                /* check db version and create stores */
                 reqDB.onupgradeneeded = function (event) {
                     var db = event.target.result;
                     if (event.oldVersion < 1) { // google: indexeddb oldversion -> MDN
@@ -25,24 +50,15 @@
                 reqDB.onerror = function (event) {
                     alert("Why didn't you allow my web app to use IndexedDB?!");
                 };
+                /* open db success */
                 reqDB.onsuccess = function (event) {
                     db = reqDB.result;
-                    // alert(db.name);
-
+                    /* create a transaction and do insert*/
                     var transaction = db.transaction(["contacts"], "readwrite");
-                    // Do something when all the data is added to the database.
-                    // transaction.oncomplete = function (event) {
-                    //     console.log("All done!");
-                    // };
-
-                    // transaction.onerror = function (event) {
-                    //     // Don't forget to handle errors!
-                    // };
-
                     var objectStore = transaction.objectStore("contacts");
                     var reqAdd = objectStore.add(obj);
                     reqAdd.onsuccess = function (event) {
-                        alert("ADD SUCCESS");
+                        show();
                     };
                     reqAdd.onerror = function (event) {
                         alert("ADD ERROR");
@@ -59,6 +75,18 @@
     Phone: <input type="text" id="phone" /> <br />
     age: <input type="text" id="age" /> <br />
     <button id="btnAdd">新增聯絡人</button>
+    <table border="1" id="t1">
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Age</th>
+        </tr>
+        <tr v-for="c in contacts">
+            <td>{{ c.name }}</td>
+            <td>{{ c.phone }}</td>
+            <td>{{ c.age }}</td>
+        </tr>
+    </table>
 </body>
 
 </html>
