@@ -103,15 +103,33 @@
                 });
 
             });
+
+            $("#btnTest").click(function () {
+                openStore("contacts", function (store) {
+                    var req1 = store.get("Linda");
+                    req1.onsuccess = function (e) {
+                        var obj = req1.result;
+                        obj.phone = "02-11223344";
+                        var req2 = store.put(obj);
+                        req2.onsuccess = function (e) {
+                            alert("OK")
+                        }
+                    }
+                });
+
+            });
         });
     </script>
 </head>
 
 <body>
+    <button id="btnTest">修改</button>
+    <hr />
     Name: <input type="text" id="name" value="test" /> <br />
     Phone: <input type="text" id="phone" /> <br />
     age: <input type="text" id="age" /> <br />
     <button id="btnAdd">新增聯絡人</button>
+    <hr />
     <table border="1" id="t1">
         <tr>
             <th>Name</th>

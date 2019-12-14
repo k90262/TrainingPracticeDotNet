@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+
+        <script src="jquery-3.4.1.min.js"></script>
+
+        <script>
+        
+
+            $(function(){
+
+                $("#btn").click(function(){
+                    if (!sessionStorage.data) sessionStorage.data = "{ \"no\": 0 }";
+                    var obj = JSON.parse(sessionStorage.data);
+                    obj.no++;
+                    $(this).text(obj.no);
+                    sessionStorage.data = JSON.stringify(obj);
+                });
+                
+                $("#btn2").click(function(){
+                    if (!localStorage.data) localStorage.data = "{ \"no\": 0 }";
+                    var obj = JSON.parse(localStorage.data);
+                    obj.no++;
+                    $(this).text(obj.no);
+                    localStorage.data = JSON.stringify(obj);
+                });
+
+            });
+        
+        </script>
+
+    </head>
+    <body>
+        <button id="btn">按我</button>
+        <button id="btn2">按我2</button>
+
+
+    </body>
+</html>
