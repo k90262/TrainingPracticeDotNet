@@ -1,26 +1,34 @@
 <html>
     <head>
-        <meta charset="UTF-8"> <!--head block內不用對稱-->
+        <meta charset="UTF-8">
+
         <script src="jquery-3.4.1.min.js"></script>
+
         <script>
+        
             $(function(){
+
                 $("#btn").click(function(){
                     var no = parseInt($("#no").val());
-                    // $("<td />").text(no).appendTo("#tr1");
                     var w = new Worker("worker.js");
-                    w.onmessage = function(e) {
-                        $("<td />").text(e.data).appendTo("#tr1");
+                    var td = $("<td />").click(function(){
+                        w.terminate();
+                    }).appendTo("#tr1");
+                    w.onmessage = function(e){
+                        td.text(e.data);
                     }
                     w.postMessage(no);
                 });
+                
             });
+        
         </script>
+
     </head>
     <body>
-        <h1>Demo08 - background job</h1>
-        <input id=no />
+        <input type="number" id="no" />
         <button id="btn">按我</button>
-        <hr />
+        <hr/>
         <table border="1">
             <tr id="tr1"></tr>
         </table>
