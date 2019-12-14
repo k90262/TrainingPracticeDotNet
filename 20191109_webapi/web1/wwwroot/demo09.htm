@@ -13,13 +13,26 @@
                     }
                     //alert(`${obj.name}, ${obj.phone}, ${obj.age} `);
                     var db;
-                    var request = indexedDB.open("DB123");
+                    var request = indexedDB.open("DB123", 2); // google indexdb -> MDN
                     request.onerror = function(event) {
                         alert("Why didn't you allow my web app to use IndexedDB?!");
                     };
                     request.onsuccess = function(event) {
                         db = request.result;
                         alert(db.name);
+                    };
+                    // This event is only implemented in recent browsers
+                    request.onupgradeneeded = function(event) { 
+                        var db = event.target.result;
+
+                        // Create an objectStore for this database
+                        if (event.oldVersion < 1) {// google: indexeddb oldversion -> MDN
+                            var objectStore = db.createObjectStore("contacts", { keyPath: "name" });
+                        }
+
+                        if (event.oldVersion < 2) {
+                            var objectStore = db.createObjectStore("employees", { keyPath: "id" });
+                        }
                     };
                 });
             });
