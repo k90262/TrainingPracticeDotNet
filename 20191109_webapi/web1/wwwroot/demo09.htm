@@ -28,23 +28,25 @@
             };
         }
 
+        function openStore(name, callback){
+            openDB(function(db) {
+                var transaction = db.transaction(name, "readwrite");
+                var objectStore = transaction.objectStore(name);
+                callback(objectStore);
+            });
+        }
+
         function show() {
-            var app = new Vue({
-                el: '#t1',
-                data: {
-                    contacts: [
-                        {
-                            name: "Peter",
-                            phone: "0923-555555",
-                            age: 20
-                        },
-                        {
-                            name: "Peter2",
-                            phone: "0955-555555",
-                            age: 30
-                        }
-                    ]
-                }
+            openDB(function (db) {
+                var transaction = db.transaction(["contacts"], "readwrite");
+                var objectStore = transaction.objectStore("contacts");
+
+                var app = new Vue({
+                    el: '#t1',
+                    data: {
+                        contacts: []
+                    }
+                });
             });
         }
 
@@ -57,10 +59,7 @@
                     phone: $("#phone").val(),
                     age: $("#age").val()
                 }
-                openDB(function(db){
-                    /* create a transaction and do insert*/
-                    var transaction = db.transaction(["contacts"], "readwrite");
-                    var objectStore = transaction.objectStore("contacts");
+                openStore("contacts", function (objectStore) {
                     var reqAdd = objectStore.add(obj);
                     reqAdd.onsuccess = function (event) {
                         show();
