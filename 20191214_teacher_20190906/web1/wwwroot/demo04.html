@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="jquery-3.4.1.min.js"></script>
+
+        <script>
+
+            $(function(){
+                $("#btnGetData").click(function(){
+                    $.getJSON("https://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=1316a13a-39cd-4db5-b663-930638f244c5", (data) => {
+                        var dt = data.result.results;
+                        for(var i=0;i<dt.length;i++) {
+                            $("#row").clone().show()
+                                .find("td").each(function() {
+                                    var id = $(this).attr("id");
+                                    $(this).text(dt[i][id]);
+                                }).end()
+                                .appendTo("#t1");
+                        }
+                    });               
+                });
+            });
+
+        </script>
+
+    </head>
+    <body>
+        <button id="btnGetData">取得資料</button>
+        <hr/>
+        <table id="t1" border="1">
+            <tr>
+                <th>受檢對象</th>
+                <th>類型</th>
+                <th>經度</th>
+                <th>緯度</th>
+                <th>檢查結果</th>
+                <th>檢查單位</th>
+                <th>檢查分隊</th>
+            </tr>
+            <tr id="row" style="display: none;">
+                <td id="SBMNAME">數位公誠證券股份有限公司</td>
+                <td id="S104NAME">證券交易所</td>
+                <td id="WGS84_X">121.5483551</td>
+                <td id="WGS84_Y">25.0417452</td>
+                <td id="RESULT">消防設備=合格,</td>
+                <td id="S101NAME">第二大隊</td>
+                <td id="S103NAME">復興分隊</td>
+            </tr>
+        </table>
+    </body>
+</html>
+

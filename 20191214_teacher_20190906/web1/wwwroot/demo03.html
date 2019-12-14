@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+
+        <style>
+            td {
+                width: 64px;
+                height: 64px;
+                background-color: pink;
+                font-size: 28px;
+                text-align: center;
+                color: red;
+            }
+
+            .special {
+                background-color: purple;
+            }
+
+        </style>
+
+        <script src="jquery-3.4.1.min.js"></script>
+
+        <script>
+            
+            var target = Math.random() * 900 + 100;
+            var interval = 10;
+            var cells;
+            var i =0;
+            function loop() {
+                $(cells[i]).removeClass("special");
+                i++;
+                if (i>=cells.length) i = 0;
+                $(cells[i]).addClass("special");
+
+                if (interval < target) {
+                    interval *= 1.05;
+                    setTimeout(loop, interval);
+                }
+            }
+
+
+            var w = 16;
+            var h = 10;
+            $(function(){
+                for(var i=0;i<h;i++){
+                    var tr = $("<tr/>").appendTo("#t1");
+                    for(var j=0;j<w;j++)
+                        tr.append($("<td/>"));
+                }
+
+                $(`tr:gt(0):lt(${h-2})`).each(function(){
+                    $(this).find(`td:gt(0):lt(${w-2})`).remove();
+                });
+                
+                $("#t1 tr:first td").each(function(i){
+                    $(this).text(i+1);
+                });
+
+                $("#t1 tr:last td").each(function(i){
+                    $(this).text(2*w+h-2-i);
+                });
+
+                $(`tr:gt(0):lt(${h-2})`).each(function(i){
+                    $(this).find("td:last").text(w+1+i);
+                    $(this).find("td:first").text((w+h)*2-4-i);
+                });
+
+                cells = $("#t1 td").get().sort((a, b) => {
+                    return parseInt(a.innerText) - parseInt(b.innerText);
+                });
+
+                $(`<td colspan="${w-2}" rowspan="${h-2}"/>`).insertAfter("#t1 tr:eq(1) td:first");
+
+
+                setTimeout(loop, interval);
+                
+                
+            });
+
+        </script>
+
+    </head>
+    <body>
+        <table id="t1" border="1">
+        </table>
+    </body>
+</html>
+

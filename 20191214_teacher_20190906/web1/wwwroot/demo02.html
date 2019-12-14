@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="jquery-3.4.1.min.js"></script>
+
+        <script>
+
+            $(function(){
+                $("#btn").click(function(){
+                    var pF = parseFloat;
+                    var x = pF( $("#no1").val() );
+                    var y = pF( $("#no2").val() );
+                    $("#answer").text(x+y);
+                });
+            });
+
+        </script>
+
+    </head>
+    <body>
+        No1: <input type="text" id="no1" /><br/>
+        No2: <input type="text" id="no2" /><br/>
+        <input type="button" value="計算" id="btn" /><br/>
+        Answer: <span id="answer"></span>
+    </body>
+</html>
+

@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+
+        <script src="jquery-3.4.1.min.js"></script>
+        <!-- <script src="demo.js"></script> -->
+
+        <script>
+            function add() {
+                var s1 = $("#no1").val();
+                var s2 = $("#no2").val();
+                var no1 = parseFloat(s1);
+                var no2 = parseFloat(s2);
+                var answer = no1 + no2;
+                $("#answer").text(answer);
+            }
+        </script>
+
+    </head>
+    <body>
+        No1: <input type="text" id="no1" /><br/>
+        No2: <input type="text" id="no2" /><br/>
+        <input type="button" value="計算" onclick="add();" /><br/>
+        Answer: <span id="answer"></span>
+    </body>
+</html>
+

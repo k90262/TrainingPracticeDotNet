@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="jquery-3.4.1.min.js"></script>
+
+        <script>
+
+            $(function(){
+
+            });
+
+        </script>
+
+    </head>
+    <body>
+=        <svg height="600" width="900">
+            <g id="r1" transform="translate(400,300)">
+                <ellipse transform="rotate(0)" cx="0" cy="0" rx="40" ry="80" stroke="black" stroke-width="3" fill="red">
+                    <animateTransform attributeName="transform" type="rotate" dur="2s" from="0" to="360" repeatCount="indefinite" />
+                    <!-- <animate attributeName="cx" dur="2s" values="50; 400; 50" repeatCount="indefinite" />         
+                    <animate attributeName="cy" dur="2s" values="50; 300; 50" repeatCount="indefinite" />          -->
+                </ellipse>
+            </g>
+            <use xlink:href="#r1" transform="translate(-200,-100)"/>
+            <use xlink:href="#r1" transform="translate(200,-100)"/>
+            <use xlink:href="#r1" transform="translate(0,200)"/>
+        </svg> 
+    </body>
+</html>
+

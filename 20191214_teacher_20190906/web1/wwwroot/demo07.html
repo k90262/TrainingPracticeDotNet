@@ -1,0 +1,80 @@
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="jquery-3.4.1.min.js"></script>
+        <script src="jsrender.min.js"></script>
+
+        <script id="row" type="text/x-jsrender">
+            <tr>
+                <td>{{:name}}</td>
+                <td>{{:age}}</td>
+            </tr>
+        </script>
+
+        <script>
+
+            function show(contacts) {
+                if (!contacts) contacts = JSON.parse(localStorage.contacts);
+                var html = $.templates("#row").render(contacts);
+                $("#t1").html(html);
+            }
+
+            $(function(){
+                show();
+
+                $("#btn").click(function(){
+
+                    var obj = {
+                        name: $("#name").val(),
+                        age: parseInt( $("#age").val() )
+                    };
+
+                    if (!localStorage.contacts) localStorage.contacts = "[]";
+                    var contacts = JSON.parse(localStorage.contacts);
+                    contacts[contacts.length] = obj;
+                    localStorage.contacts = JSON.stringify(contacts);
+
+                    show();
+                });
+
+                $("#btnSearch").click(function(){
+                    var ageFrom = parseInt($("#ageFrom").val());
+                    var ageTo = parseInt($("#ageTo").val());
+
+                    var result = [];
+
+                    if (!localStorage.contacts) localStorage.contacts = "[]";
+                    var contacts = JSON.parse(localStorage.contacts);
+                    $(contacts).each(function(i, obj){
+                        if (obj.age >= ageFrom && obj.age <= ageTo)
+                            result[result.length] = obj;
+                    });
+
+                    show(result);
+
+                });
+            });
+
+        </script>
+
+    </head>
+    <body>
+        Name: <input type="text" id="name" /><br/>
+        Age: <input type="number" id="age" /><br/>
+        <button id=btn>Add new contact information</button>
+        <hr/>
+        Age from 
+        <input type="number" id="ageFrom" style="width:50px;" /> to 
+        <input type="number" id="ageTo" style="width:50px;" />
+        <button id="btnSearch">Search</button>
+        <hr/>
+        <table id="t1" border="1">
+            <tr>
+                <th>姓名</th>
+                <th>年齡</th>
+            </tr>
+        </table>
+    </body>
+</html>
+

@@ -1,0 +1,182 @@
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="jquery-3.4.1.min.js"></script>
+        <script src="jsrender.min.js"></script>
+
+        <script id="row" type="text/x-jsrender">
+            <tr>
+                <td>{{:name}}</td>
+                <td>{{:age}}</td>
+                <td>
+                    <a href="" onclick="deleteContact('{{:name}}'); return false;">刪除</a>
+                    <a href="" onclick="editContact('{{:name}}'); return false;">編輯</a>
+                </td>
+            </tr>
+        </script>
+
+        <script>
+
+
+
+            function editContact(name) {
+                openObjectStore("contacts", function(objectStore){
+                    var request2 = objectStore.get(name);
+                    request2.onsuccess = function(event) {
+                        var obj = request2.result;
+                        $("#nameEdit").text(obj.name);
+                        $("#ageEdit").val(obj.age);
+                        $("#dlgEdit").attr("open", "");
+                    };
+                });   
+            }
+
+            function deleteContact(name) {
+                if (confirm(`確定刪除 ${name} 嗎?`)) {
+                    openObjectStore("contacts", function(objectStore){
+                        var request2 = objectStore.delete(name);
+                        request2.onsuccess = function(event) {
+                            show();
+                        };
+                    });   
+                }
+            }
+
+            function openDB(callback) {
+                var request = window.indexedDB.open("MyTestDatabase", 2);
+                request.onerror = function(event) {
+                    alert(request.errorCode);
+                };
+                request.onsuccess = function(event) {
+                    var db = request.result;
+                    callback(db);
+                };
+                request.onupgradeneeded = function(event) { 
+                    var db = event.target.result;
+                    if (event.oldVersion < 1) {
+                        db.createObjectStore("contacts", { keyPath: "name" });
+                    }
+                    if (event.oldVersion < 2) {
+                        var objectStore = request.transaction.objectStore("contacts");
+                        objectStore.createIndex("index_age", "age", { unique: false });
+                    }
+                };
+            }
+
+            function openObjectStore(name, callback) {
+                openDB(function(db){
+                    var transaction = db.transaction(name, "readwrite");
+                    var objectStore = transaction.objectStore(name);
+                    callback(objectStore);
+                });                                
+            }
+
+            function show(contacts) {
+                openObjectStore("contacts", function(objectStore) {
+                    var request2 = objectStore.openCursor();
+                    $("#t1 tr:gt(0)").remove();                 
+                    request2.onsuccess = function(event) {
+                        var cursor = event.target.result;
+                        if (cursor) {
+                            var html = $.templates("#row").render(cursor.value);
+                            $("#t1").append(html);    
+                            cursor.continue();
+                        }
+                    };
+                });                
+            }
+
+            $(function(){
+                show();
+
+                $("#btnUpdate").click(function(){
+                    openObjectStore("contacts", function(objectStore){
+                        var obj = {
+                            name: $("#nameEdit").text(),
+                            age: parseInt( $("#ageEdit").val() )
+                        };
+                        var request2 = objectStore.put(obj);
+                        request2.onsuccess = function(event) {
+                            $("#dlgEdit").removeAttr("open");
+                            show();
+                        };
+                        request2.onerror = function(event) {
+                            alert("ERROR");
+                        };
+                    });
+
+                });
+
+                $("#btnCancel").click(function(){
+                    $("#dlgEdit").removeAttr("open");
+                });
+
+                $("#btn").click(function(){
+                    var obj = {
+                        name: $("#name").val(),
+                        age: parseInt( $("#age").val() )
+                    };
+
+                    openObjectStore("contacts", function(objectStore){
+                        var request2 = objectStore.add(obj);
+                        request2.onsuccess = function(event) {
+                            show();
+                        };
+                        request2.onerror = function(event) {
+                            alert("ERROR");
+                        };
+                    });
+                });
+
+                $("#btnSearch").click(function(){
+                    var ageFrom = parseInt($("#ageFrom").val());
+                    var ageTo = parseInt($("#ageTo").val());
+
+                    openObjectStore("contacts", function(objectStore) {
+                        var index = objectStore.index("index_age");
+                        var range = IDBKeyRange.bound(ageFrom, ageTo, false, false);
+                        var request2 = index.openCursor(range, "next");
+                        $("#t1 tr:gt(0)").remove();                 
+                        request2.onsuccess = function(event) {
+                            var cursor = event.target.result;
+                            if (cursor) {
+                                var html = $.templates("#row").render(cursor.value);
+                                $("#t1").append(html);    
+                                cursor.continue();
+                            }
+                        };
+                    });    
+
+                });
+            });
+
+        </script>
+
+    </head>
+    <body>
+        <dialog id="dlgEdit">
+            Name: <label id="nameEdit"></label><br/>
+            Age: <input type="number" id="ageEdit" /><br/>
+            <button id="btnUpdate">確定修改</button>
+            <button id="btnCancel">取消</button>
+        </dialog>
+        Name: <input type="text" id="name" /><br/>
+        Age: <input type="number" id="age" /><br/>
+        <button id="btn">Add new contact information</button>
+        <hr/>
+        Age from 
+        <input type="number" id="ageFrom" style="width:50px;" /> to 
+        <input type="number" id="ageTo" style="width:50px;" />
+        <button id="btnSearch">Search</button>
+        <hr/>
+        <table id="t1" border="1">
+            <tr>
+                <th>姓名</th>
+                <th>年齡</th>
+                <th></th>
+            </tr>
+        </table>
+    </body>
+</html>
+

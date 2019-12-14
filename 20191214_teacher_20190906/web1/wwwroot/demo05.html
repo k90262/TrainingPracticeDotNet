@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="jquery-3.4.1.min.js"></script>
+        <script src="jsrender.min.js"></script>
+
+        <script id="row" type="text/x-jsrender">
+            <tr>
+                <td>{{:SBMNAME}}</td>
+                <td>{{:S104NAME}}</td>
+                <td>{{:WGS84_X}}</td>
+                <td>{{:WGS84_Y}}</td>
+                <td>{{:RESULT}}</td>
+                <td>{{:S101NAME}}</td>
+                <td>{{:S103NAME}}</td>
+            </tr>
+        </script>
+
+        <script>
+
+            var map;
+
+            $(function(){
+                $("#btnGetData").click(function(){
+                    $.getJSON("https://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=1316a13a-39cd-4db5-b663-930638f244c5", (data) => {
+                        var dt = data.result.results;
+                        var html = $.templates("#row").render(dt);
+                        $("#t1").html(html);
+
+                        for(var i=0;i<dt.length;i++) {
+                            var marker = new google.maps.Marker({
+                                position: {
+                                    lat: parseFloat(dt[i].WGS84_Y) ,
+                                    lng: parseFloat(dt[i].WGS84_X)
+                                }, 
+                                map: map,
+                                title: dt[i].SBMNAME
+                            });   
+                        }
+                    });               
+                });
+            });
+
+        </script>
+
+    </head>
+    <body>
+        <button id="btnGetData">取得資料</button>
+        <hr/>
+        <div id="map" style="width:800px;height:500px;"></div>
+        <script>
+          function initMap() {
+
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                    lat: position.coords.latitude, 
+                    lng: position.coords.longitude
+                };
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: pos,
+                    zoom: 16
+                });     
+                var marker = new google.maps.Marker({
+                    position: pos, 
+                    map: map,
+                    title: "我在這裡 !!"
+                });           
+            });
+
+          }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXmuhlamY06zyXK3asWoG6GykJ-j3oLj4&callback=initMap"
+        async defer></script>
+        <hr/>
+        <table id="t1" border="1">
+            <tr>
+                <th>受檢對象</th>
+                <th>類型</th>
+                <th>經度</th>
+                <th>緯度</th>
+                <th>檢查結果</th>
+                <th>檢查單位</th>
+                <th>檢查分隊</th>
+            </tr>
+        </table>
+    </body>
+</html>
+
