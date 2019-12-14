@@ -1,47 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8"> <!--head block內不用對稱-->
-        <script src="jquery-3.4.1.min.js"></script>
-        <script>
-            $(function(){
-                $("#btnAdd").click(function(){
-                    var obj = {
-                        name: $("#name").val(),
-                        phone: $("#phone").val(),
-                        age: $("#age").val()
+
+<head>
+    <meta charset="UTF-8">
+    <!--head block內不用對稱-->
+    <script src="jquery-3.4.1.min.js"></script>
+    <script>
+        $(function () {
+            $("#btnAdd").click(function () {
+                var obj = {
+                    name: $("#name").val(),
+                    phone: $("#phone").val(),
+                    age: $("#age").val()
+                }
+                //alert(`${obj.name}, ${obj.phone}, ${obj.age} `);
+                var db;
+                var request = indexedDB.open("DB123", 2); // google indexdb -> MDN
+                request.onerror = function (event) {
+                    alert("Why didn't you allow my web app to use IndexedDB?!");
+                };
+                request.onsuccess = function (event) {
+                    db = request.result;
+                    alert(db.name);
+                };
+                // This event is only implemented in recent browsers
+                request.onupgradeneeded = function (event) {
+                    var db = event.target.result;
+
+                    // Create an objectStore for this database
+                    if (event.oldVersion < 1) {// google: indexeddb oldversion -> MDN
+                        var objectStore = db.createObjectStore("contacts", { keyPath: "name" });
                     }
-                    //alert(`${obj.name}, ${obj.phone}, ${obj.age} `);
-                    var db;
-                    var request = indexedDB.open("DB123", 2); // google indexdb -> MDN
-                    request.onerror = function(event) {
-                        alert("Why didn't you allow my web app to use IndexedDB?!");
-                    };
-                    request.onsuccess = function(event) {
-                        db = request.result;
-                        alert(db.name);
-                    };
-                    // This event is only implemented in recent browsers
-                    request.onupgradeneeded = function(event) { 
-                        var db = event.target.result;
 
-                        // Create an objectStore for this database
-                        if (event.oldVersion < 1) {// google: indexeddb oldversion -> MDN
-                            var objectStore = db.createObjectStore("contacts", { keyPath: "name" });
-                        }
-
-                        if (event.oldVersion < 2) {
-                            var objectStore = db.createObjectStore("employees", { keyPath: "id" });
-                        }
-                    };
-                });
+                    if (event.oldVersion < 2) {
+                        var objectStore = db.createObjectStore("employees", { keyPath: "id" });
+                    }
+                };
             });
-        </script>
-    </head>
-    <body>
-        Name: <input type="text" id="name" value="test"/> <br />
-        Phone: <input type="text" id="phone"/> <br />
-        age: <input type="text" id="age"/> <br />
-        <button id="btnAdd">新增聯絡人</button>
-    </body>
+        });
+    </script>
+</head>
+
+<body>
+    Name: <input type="text" id="name" value="test" /> <br />
+    Phone: <input type="text" id="phone" /> <br />
+    age: <input type="text" id="age" /> <br />
+    <button id="btnAdd">新增聯絡人</button>
+</body>
+
 </html>
