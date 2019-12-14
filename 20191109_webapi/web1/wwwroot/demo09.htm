@@ -7,6 +7,7 @@
     <script src="jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script>
+        var app;
         function openDB(callback) {
             /* open db */
             var reqDB = indexedDB.open("DB123"); // google indexdb -> MDN
@@ -52,20 +53,25 @@
                     }
                     else {
                         //alert(contacts.length);
-                        var app = new Vue({
-                            el: '#t1',
-                            data: {
-                                contacts: contacts
-                            }
-                        });
+                        app.contacts = contacts;
                     }
                 };
             });
         }
 
         $(function () {
+            /* init Vue object */
+            app = new Vue({
+                el: '#t1',
+                data: {
+                    contacts: []
+                }
+            });
+
+            /* show DB data */
             show();
 
+            /* implement function of click event in order to insert data to indexdDB */
             $("#btnAdd").click(function () {
                 var obj = {
                     name: $("#name").val(),
