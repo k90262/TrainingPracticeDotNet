@@ -7,6 +7,27 @@
     <script src="jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script>
+        function openDB(callback) {
+            /* open db */
+            var reqDB = indexedDB.open("DB123"); // google indexdb -> MDN
+            /* check db version and create stores */
+            reqDB.onupgradeneeded = function (event) {
+                var db = event.target.result;
+                if (event.oldVersion < 1) { // google: indexeddb oldversion -> MDN
+                    var objectStore = db.createObjectStore("contacts", { keyPath: "name" });
+                }
+
+            };
+            reqDB.onerror = function (event) {
+                alert("Why didn't you allow my web app to use IndexedDB?!");
+            };
+            /* open db success */
+            reqDB.onsuccess = function (event) {
+                var db = reqDB.result;
+                callback(db);
+            };
+        }
+
         function show() {
             var app = new Vue({
                 el: '#t1',
@@ -36,23 +57,7 @@
                     phone: $("#phone").val(),
                     age: $("#age").val()
                 }
-                /* open db */
-                var db;
-                var reqDB = indexedDB.open("DB123"); // google indexdb -> MDN
-                /* check db version and create stores */
-                reqDB.onupgradeneeded = function (event) {
-                    var db = event.target.result;
-                    if (event.oldVersion < 1) { // google: indexeddb oldversion -> MDN
-                        var objectStore = db.createObjectStore("contacts", { keyPath: "name" });
-                    }
-
-                };
-                reqDB.onerror = function (event) {
-                    alert("Why didn't you allow my web app to use IndexedDB?!");
-                };
-                /* open db success */
-                reqDB.onsuccess = function (event) {
-                    db = reqDB.result;
+                openDB(function(db){
                     /* create a transaction and do insert*/
                     var transaction = db.transaction(["contacts"], "readwrite");
                     var objectStore = transaction.objectStore("contacts");
@@ -63,7 +68,7 @@
                     reqAdd.onerror = function (event) {
                         alert("ADD ERROR");
                     };
-                };
+                });
 
             });
         });
