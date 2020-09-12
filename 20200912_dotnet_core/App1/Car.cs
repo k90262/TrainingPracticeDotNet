@@ -17,7 +17,7 @@ class Car
     public int Torgue { get; set; } // short-cut: tyep 'prop', then click 'tab'
     public int Horsepower { get; set; }
 
-    public void SpeedUp(int no)
+    public virtual void SpeedUp(int no)
     {
         this.Speed += no;
     }

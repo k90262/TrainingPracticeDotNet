@@ -40,7 +40,7 @@ namespace App1
 // result:
 // 0
 // 20
-// 30
+// 40 (c.SpeedUp(10);)
         }
     }
 }
