@@ -12,7 +12,7 @@ namespace PinBall
             this.Width = 15;
         }
 
-        int dx = 3, dy = 3;
+        int dx = 4, dy = 4;
         void IMovable.Move()
         {
             this.Left += dx;
@@ -24,6 +24,11 @@ namespace PinBall
             IHittable obj = HitOthers();
             if (obj != null)
             {
+                Control c = (Control)obj;
+                if (dy < 0)     // moving up
+                    this.Top = c.Bottom + 1;
+                else            // moving down
+                    this.Top = c.Top - this.Height;
                 dy = -dy;
             }
 

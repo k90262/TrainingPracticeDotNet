@@ -58,12 +58,12 @@ namespace PinBall
             ball.BringToFront();
 
 
-            Brick test = new Brick();
-            test.Left = 200;
-            test.Top = 300;
-            test.State = BrickState.Floating;
-            this.Controls.Add(test);
-            test.BringToFront();
+            // Brick test = new Brick();
+            // test.Left = 200;
+            // test.Top = 300;
+            // test.State = BrickState.Floating;
+            // this.Controls.Add(test);
+            // test.BringToFront();
 
         }
 
