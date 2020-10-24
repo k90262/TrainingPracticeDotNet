@@ -34,7 +34,7 @@ namespace Gobang
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
             Player p1 = new Human(board, Color.Black);
-            Player p2 = new Human(board, Color.White);
+            Player p2 = new Computer(board, Color.White);
             p1.NextPlayer = p2;
             p2.NextPlayer = p1;
             board.CurrentPlayer = p1;
@@ -78,7 +78,7 @@ namespace Gobang
             if (board.CurrentPlayer is Human && CanPut(e.X, e.Y, out x, out y))
             {
                 board[x, y] = board.CurrentPlayer.Color;
-                this.Invalidate();
+                this.Invalidate(); // send paint event
 
                 finishedLines = board.CheckWin(x, y);
                 if (finishedLines.Count > 0)
