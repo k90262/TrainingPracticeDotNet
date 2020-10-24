@@ -32,6 +32,12 @@ namespace Gobang
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+
+            Player p1 = new Human(board, Color.Black);
+            Player p2 = new Human(board, Color.White);
+            p1.NextPlayer = p2;
+            p2.NextPlayer = p1;
+            board.CurrentPlayer = p1;
         }
 
 
@@ -69,21 +75,21 @@ namespace Gobang
         void Form_MouseDown(object sender, MouseEventArgs e)
         {
             int x, y;
-            if (CanPut(e.X, e.Y, out x, out y))
+            if (board.CurrentPlayer is Human && CanPut(e.X, e.Y, out x, out y))
             {
-                board[x, y] = players[currentPlayer];
+                board[x, y] = board.CurrentPlayer.Color;
                 this.Invalidate();
 
                 finishedLines = board.CheckWin(x, y);
                 if (finishedLines.Count > 0)
                 {
                     this.Invalidate();
-                    MessageBox.Show($"Player {players[currentPlayer]} win !");
+                    MessageBox.Show($"Player {board.CurrentPlayer} win !");
                     //Application.Exit();
                 }
 
-                currentPlayer++;
-                if (currentPlayer >= players.Length) currentPlayer = 0;
+                board.CurrentPlayer = board.CurrentPlayer.NextPlayer;
+                board.CurrentPlayer.Think();
 
             }
         }

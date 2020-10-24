@@ -9,5 +9,11 @@ namespace Gobang
         public Board Board { get; set; }
         public abstract void Think();
 
+        public Player(Board board, Color color)
+        {
+            this.Board = board;
+            this.Color = color;
+        }
+
     }
 }

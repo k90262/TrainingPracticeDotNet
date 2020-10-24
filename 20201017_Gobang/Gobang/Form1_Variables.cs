@@ -21,9 +21,5 @@ namespace Gobang
 
         List<Line> finishedLines = new List<Line>();
 
-
-        Color[] players = { Color.Black, Color.White };
-        int currentPlayer = 0;
-
     }
 }

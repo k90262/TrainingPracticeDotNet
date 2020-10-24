@@ -2,8 +2,12 @@ using System.Drawing;
 
 namespace Gobang
 {
-    abstract class Human : Player
+    class Human : Player
     {
+        public Human(Board board, Color color) : base(board, color)
+        {
+            
+        }
         public override void Think()
         {
 
