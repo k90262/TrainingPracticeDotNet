@@ -56,7 +56,7 @@ namespace Gobang
         {
             x = (mx - OriginX) / CellSize;
             y = (my - OriginY) / CellSize;
-            if (x >= 0 && x < BoardSize && y >= 0 && y < BoardSize)
+            if (Board.IsValid(x, y))
             {
                 int ax = (mx - OriginX) % CellSize;
                 int ay = (my - OriginY) % CellSize;
@@ -74,7 +74,7 @@ namespace Gobang
                 board[x, y] = players[currentPlayer];
                 this.Invalidate();
 
-                finishedLines = CheckWin(x, y);
+                finishedLines = board.CheckWin(x, y);
                 if (finishedLines.Count > 0)
                 {
                     this.Invalidate();
@@ -88,45 +88,5 @@ namespace Gobang
             }
         }
 
-        private List<Line> CheckWin(int cx, int cy)
-        {
-            List<Line> finishedLines = new List<Line>();
-
-            for (int lineNo = 0; lineNo < lines.GetLength(0); lineNo++)
-            {
-                int count = 1;
-                List<Point> points = new List<Point>();
-                for (int direction = 0; direction < lines.GetLength(1); direction++)
-                {
-                    int dx = lines[lineNo, direction, 0];
-                    int dy = lines[lineNo, direction, 1];
-                    int x = cx + dx;
-                    int y = cy + dy;
-
-                    while (IsValid(x, y) && board[x, y] == board[cx, cy])
-                    {
-                        count++;
-                        x += dx;
-                        y += dy;
-                    }
-
-                    points.Add(new Point(x - dx, y - dy));
-                }
-
-                if (count >= 5)
-                {
-                    finishedLines.Add(new Line(points[0].X, points[0].Y, points[1].X, points[1].Y));
-                }
-
-            }
-
-
-            return finishedLines;
-        }
-
-        private bool IsValid(int x, int y)
-        {
-            return x >= 0 && x < BoardSize && y >= 0 && y < BoardSize;
-        }
     }
 }

@@ -15,9 +15,9 @@ namespace Gobang
     {
         void Form_Paint(object sender, PaintEventArgs e)
         {
-            for(int x = 0; x < BoardSize; x++)
+            for(int x = 0; x < Board.BoardSize; x++)
             {
-                for(int y = 0; y < BoardSize; y++)
+                for(int y = 0; y < Board.BoardSize; y++)
                 {
                     if (board[x, y] != Color.Empty)
                     {
