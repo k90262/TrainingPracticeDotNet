@@ -18,7 +18,7 @@ namespace Gobang
         const int CellSize = 35;
         const int CellPadding = 4;
         const int BoardSize = 15;
-        Color[,] chess = new Color[BoardSize, BoardSize];
+        Board board = new Board();
 
         List<Line> finishedLines = new List<Line>();
 

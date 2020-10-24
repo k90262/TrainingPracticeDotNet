@@ -19,9 +19,9 @@ namespace Gobang
             {
                 for(int y = 0; y < BoardSize; y++)
                 {
-                    if (chess[x, y] != Color.Empty)
+                    if (board[x, y] != Color.Empty)
                     {
-                        Brush b = new SolidBrush(chess[x, y]);
+                        Brush b = new SolidBrush(board[x, y]);
                         int cx = OriginX + CellPadding + x * CellSize;
                         int cy = OriginY + CellPadding + y * CellSize;
                         int size = CellSize - CellPadding * 2;

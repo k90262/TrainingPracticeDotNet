@@ -60,7 +60,7 @@ namespace Gobang
             {
                 int ax = (mx - OriginX) % CellSize;
                 int ay = (my - OriginY) % CellSize;
-                return ax > CellPadding && ax < CellSize - CellPadding && ay > CellPadding && ay < CellSize - CellPadding && chess[x, y] == Color.Empty;
+                return ax > CellPadding && ax < CellSize - CellPadding && ay > CellPadding && ay < CellSize - CellPadding && board[x, y] == Color.Empty;
             }
             else
                 return false;
@@ -71,7 +71,7 @@ namespace Gobang
             int x, y;
             if (CanPut(e.X, e.Y, out x, out y))
             {
-                chess[x, y] = players[currentPlayer];
+                board[x, y] = players[currentPlayer];
                 this.Invalidate();
 
                 finishedLines = CheckWin(x, y);
@@ -103,7 +103,7 @@ namespace Gobang
                     int x = cx + dx;
                     int y = cy + dy;
 
-                    while (IsValid(x, y) && chess[x, y] == chess[cx, cy])
+                    while (IsValid(x, y) && board[x, y] == board[cx, cy])
                     {
                         count++;
                         x += dx;
