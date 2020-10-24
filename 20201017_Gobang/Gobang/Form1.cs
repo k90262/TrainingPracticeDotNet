@@ -13,21 +13,11 @@ namespace Gobang
 {
     public partial class Form1 : Form
     {
-        const int OriginX = 4;
-        const int OriginY = 4;
-        const int CellSize = 35;
-        const int CellPending = 3;
-        const int BoardSize = 15;
-        Color[,] chess = new Color[BoardSize, BoardSize];
         public Form1()
         {
-            //MessageBox.Show($"{chess[5,7]==Color.Empty}");
-
             InitializeComponent();
 
-            //this.Text = Path.GetDirectoryName(Application.ExecutablePath);
             string filename = Path.GetDirectoryName(Application.ExecutablePath) + @"\ChessBoard.jpg";
-
             Image img = new Bitmap(filename);
             this.BackgroundImage = img;
             this.ClientSize = new Size(img.Width, img.Height);
@@ -37,21 +27,27 @@ namespace Gobang
 
             this.MouseMove += Form_MouseMove;
             this.MouseDown += Form_MouseDown;
-            //PaintEventHandler
             this.Paint += Form_Paint;
+
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
         }
 
-        private void Form_MouseMove(object sender, MouseEventArgs e)
+
+        void Form_MouseMove(object sender, MouseEventArgs e)
         {
-            this.Text = $"X = {e.X}, Y = {e.Y}, Button={e.Button}";
+            // this.Text = "X=" + e.X.ToString() + ", Y=" + e.Y.ToString() + ", Button=" + e.Button.ToString();
+            // this.Text = string.Format("X={0}, Y={1}, Button={2}", e.X, e.Y, e.Button);
+            // this.Text = $"X={e.X}, Y={e.Y}, Button={e.Button}";
 
             int x, y;
             if (CanPut(e.X, e.Y, out x, out y))
             {
-                this.Text = $"X = {e.X}, Y = {e.Y}, Button={e.Button}, x={x}, y={y}";
+                // this.Text = $"X={e.X}, Y={e.Y}, Button={e.Button}, x={x}, y={y}";
                 this.Cursor = Cursors.Hand;
             }
-            else 
+            else
                 this.Cursor = Cursors.No;
 
         }
@@ -60,45 +56,77 @@ namespace Gobang
         {
             x = (mx - OriginX) / CellSize;
             y = (my - OriginY) / CellSize;
-
-            if (x >= 0 && x < BoardSize &&
-                y >= 0 && y < BoardSize)
+            if (x >= 0 && x < BoardSize && y >= 0 && y < BoardSize)
             {
                 int ax = (mx - OriginX) % CellSize;
                 int ay = (my - OriginY) % CellSize;
-                return ax > CellPending && ax < CellSize - CellPending && ay > CellPending && ay < CellSize - CellPending && chess[x, y] == Color.Empty;
+                return ax > CellPadding && ax < CellSize - CellPadding && ay > CellPadding && ay < CellSize - CellPadding && chess[x, y] == Color.Empty;
             }
-            else 
+            else
                 return false;
         }
 
-        private void Form_MouseDown(object sender, MouseEventArgs e)
+        void Form_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Text = e.Button.ToString();
-
             int x, y;
             if (CanPut(e.X, e.Y, out x, out y))
             {
-                chess[x, y] = Color.White;
-                //MessageBox.Show("OK");
-            }
-        }
+                chess[x, y] = players[currentPlayer];
+                this.Invalidate();
 
-        private void Form_Paint(object sender, PaintEventArgs e) 
-        {
-            //e.Graphics.DrawLine(Pens.Blue, 100, 100, 200, 300);
-            for (int x = 0; x < BoardSize; x++)
-            {
-                for (int y = 0; y < BoardSize; y++)
+                finishedLines = CheckWin(x, y);
+                if (finishedLines.Count > 0)
                 {
-                    Brush b = new SolidBrush(chess[x, y]);
-                    int cx = OriginX + CellPending + x * CellSize;
-                    int cy = OriginY + CellPending + y * CellSize;
-                    int size = CellSize - CellPending * 2;
-                    e.Graphics.FillEllipse(b, cx, cy, size, size);
+                    this.Invalidate();
+                    MessageBox.Show($"Player {players[currentPlayer]} win !");
+                    //Application.Exit();
                 }
+
+                currentPlayer++;
+                if (currentPlayer >= players.Length) currentPlayer = 0;
+
             }
         }
 
+        private List<Line> CheckWin(int cx, int cy)
+        {
+            List<Line> finishedLines = new List<Line>();
+
+            for (int lineNo = 0; lineNo < lines.GetLength(0); lineNo++)
+            {
+                int count = 1;
+                List<Point> points = new List<Point>();
+                for (int direction = 0; direction < lines.GetLength(1); direction++)
+                {
+                    int dx = lines[lineNo, direction, 0];
+                    int dy = lines[lineNo, direction, 1];
+                    int x = cx + dx;
+                    int y = cy + dy;
+
+                    while (IsValid(x, y) && chess[x, y] == chess[cx, cy])
+                    {
+                        count++;
+                        x += dx;
+                        y += dy;
+                    }
+
+                    points.Add(new Point(x - dx, y - dy));
+                }
+
+                if (count >= 5)
+                {
+                    finishedLines.Add(new Line(points[0].X, points[0].Y, points[1].X, points[1].Y));
+                }
+
+            }
+
+
+            return finishedLines;
+        }
+
+        private bool IsValid(int x, int y)
+        {
+            return x >= 0 && x < BoardSize && y >= 0 && y < BoardSize;
+        }
     }
 }
