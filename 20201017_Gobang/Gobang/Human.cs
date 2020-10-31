@@ -10,10 +10,11 @@ namespace Gobang
         }
 
         Point p = Point.Empty;
-        
+
         public void SetPoint(int x, int y)
         {
             p = new Point(x, y);
+            this.Board[x, y] = this.Color;
         }
 
         public override Point Think()

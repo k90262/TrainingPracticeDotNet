@@ -7,6 +7,7 @@ namespace Gobang
     class Board
     {
         public const int BoardSize = 15;
+        public int Count = BoardSize * BoardSize; 
         Color[,] chess = new Color[BoardSize, BoardSize];
 
         public Player CurrentPlayer { get; set; }
@@ -44,6 +45,7 @@ namespace Gobang
             set
             {
                 chess[x, y] = value;
+                Count--;
             }
         }
 

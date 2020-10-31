@@ -67,6 +67,7 @@ namespace Gobang
 
                         long w = 0;
                         foreach(var line in attackLines.Where(l => l.Count + l.Space >= 5)) w += attack[line.Count] + line.Space; // fixed the 1st point of computer who are the first player
+                        //foreach(var line in defenceLines.Where(l => l.Count + l.Space >= 5)) w += defence[line.Count] * 200  + line.Space; // test if 'nobody wins' case is runned successfully
                         foreach(var line in defenceLines.Where(l => l.Count + l.Space >= 5)) w += defence[line.Count] + line.Space;
 
                         if (w >= weight)

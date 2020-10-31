@@ -36,7 +36,7 @@ namespace Gobang
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
             Player p1 = new Computer(board, Color.Black);
-            Player p2 = new Human(board, Color.White);
+            Player p2 = new Computer(board, Color.White);
             p1.NextPlayer = p2;
             p2.NextPlayer = p1;
             board.CurrentPlayer = p1;
@@ -64,10 +64,17 @@ namespace Gobang
                         Application.Exit();
                     }
 
+                    if (board.Count == 0)
+                    {
+                        t.Enabled = false;
+                        MessageBox.Show($"Nobody wins!");
+                        Application.Exit();
+                    }
+
                     board.CurrentPlayer = board.CurrentPlayer.NextPlayer;
                 }
             };
-            t.Interval = 100;
+            t.Interval = 10;
             t.Enabled = true;
         }
 
@@ -161,8 +168,6 @@ namespace Gobang
             int x, y;
             if (board.CurrentPlayer is Human && CanPut(e.X, e.Y, out x, out y))
             {
-                board[x, y] = board.CurrentPlayer.Color;
-                
                 ((Human)board.CurrentPlayer).SetPoint(x, y);
             }
         }
