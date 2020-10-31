@@ -39,10 +39,13 @@ namespace Gobang
             Player p2 = new Computer(board, Color.White);
             p1.NextPlayer = p2;
             p2.NextPlayer = p1;
-            board.CurrentPlayer = p1;
+            board.CurrentPlayer = p2;
+            board.CurrentPlayer.Think();
 
-
-
+            // test case 1. -> avoid pc put no-meaning point at left side of line after black player put a point at right side of line. (fixed by concerning space)
+            // board[1, 5] = Color.White;
+            // board[2, 5] = Color.White;
+            // board[3, 5] = Color.White;
 
         }
 

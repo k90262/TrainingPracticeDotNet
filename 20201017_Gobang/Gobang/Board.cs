@@ -54,6 +54,7 @@ namespace Gobang
             for (int lineNo = 0; lineNo < lines.GetLength(0); lineNo++)
             {
                 int count = 1;
+                int space = 0;
                 List<Point> points = new List<Point>();
                 for (int direction = 0; direction < lines.GetLength(1); direction++)
                 {
@@ -70,9 +71,16 @@ namespace Gobang
                     }
 
                     points.Add(new Point(x - dx, y - dy));
+
+                    while (IsValid(x, y) && this[x, y] == Color.Empty)
+                    {
+                        space++;
+                        x += dx;
+                        y += dy;
+                    }
                 }
 
-                finishedLines.Add(new Line(count, points[0].X, points[0].Y, points[1].X, points[1].Y));
+                finishedLines.Add(new Line(count, space, points[0].X, points[0].Y, points[1].X, points[1].Y));
 
             }
 

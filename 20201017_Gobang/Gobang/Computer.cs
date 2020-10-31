@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace Gobang
 {
@@ -65,8 +66,8 @@ namespace Gobang
                         var defenceLines = this.Board.CheckWin(x, y, this.NextPlayer.Color);
 
                         long w = 0;
-                        foreach(var line in attackLines) w += attack[line.Count];
-                        foreach(var line in defenceLines) w += defence[line.Count];
+                        foreach(var line in attackLines.Where(l => l.Count + l.Space >= 5)) w += attack[line.Count] + line.Space; // fixed the 1st point of computer who are the first player
+                        foreach(var line in defenceLines.Where(l => l.Count + l.Space >= 5)) w += defence[line.Count] + line.Space;
 
                         if (w >= weight)
                         {
