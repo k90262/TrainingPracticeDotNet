@@ -8,7 +8,7 @@ namespace Gobang
         public Player NextPlayer { get; set; }
         public Board Board { get; set; }
         public abstract void Think();
-
+        
         public Player(Board board, Color color)
         {
             this.Board = board;

@@ -9,18 +9,6 @@ namespace Gobang
         public const int BoardSize = 15;
         Color[,] chess = new Color[BoardSize, BoardSize];
 
-        public Color this[int x, int y]
-        {
-            get 
-            {
-                return chess[x, y];
-            }
-            set
-            {
-                chess[x, y] = value;
-            }
-        }
-
         public Player CurrentPlayer { get; set; }
 
         // 棋子四條連線的各兩個方向座標差值
@@ -47,7 +35,19 @@ namespace Gobang
             }
         };
 
-        public List<Line> CheckWin(int cx, int cy)
+        public Color this[int x, int y]
+        {
+            get
+            {
+                return chess[x, y];
+            }
+            set
+            {
+                chess[x, y] = value;
+            }
+        }
+
+        public List<Line> CheckWin(int cx, int cy, Color color)
         {
             List<Line> finishedLines = new List<Line>();
 
@@ -62,7 +62,7 @@ namespace Gobang
                     int x = cx + dx;
                     int y = cy + dy;
 
-                    while (IsValid(x, y) && this[x, y] == this[cx, cy])
+                    while (IsValid(x, y) && this[x, y] == color)
                     {
                         count++;
                         x += dx;
@@ -72,13 +72,9 @@ namespace Gobang
                     points.Add(new Point(x - dx, y - dy));
                 }
 
-                if (count >= 5)
-                {
-                    finishedLines.Add(new Line(points[0].X, points[0].Y, points[1].X, points[1].Y));
-                }
+                finishedLines.Add(new Line(count, points[0].X, points[0].Y, points[1].X, points[1].Y));
 
             }
-
 
             return finishedLines;
         }
@@ -87,5 +83,7 @@ namespace Gobang
         {
             return x >= 0 && x < Board.BoardSize && y >= 0 && y < Board.BoardSize;
         }
+
+
     }
 }

@@ -1,24 +1,91 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Gobang
 {
     class Computer : Player
     {
+        long[] attack = {
+            0,
+            10,          // 1
+            1000,        // 2
+            100000,      // 3
+            10000000,    // 4
+            1000000000,   // 5
+            1000000000,   // 5
+            1000000000,   // 5
+            1000000000,   // 5
+            1000000000,   // 5
+            1000000000,   // 5
+            1000000000,   // 5
+            1000000000,   // 5
+            1000000000,   // 5
+            1000000000,   // 5
+            1000000000,   // 5
+            1000000000   // 5
+        };
+
+        long[] defence = {
+            0,
+            1,           // 1
+            100,         // 2
+            10000,       // 3
+            1000000,     // 4
+            100000000,    // 5
+            100000000,    // 5
+            100000000,    // 5
+            100000000,    // 5
+            100000000,    // 5
+            100000000,    // 5
+            100000000,    // 5
+            100000000,    // 5
+            100000000,    // 5
+            100000000,    // 5
+            100000000    // 5
+        };
+
         public Computer(Board board, Color color) : base(board, color)
         {
-            
+
         }
+
         public override void Think()
         {
-            Random rnd = new Random();
-            int x, y;
-            do {
-                x = rnd.Next(Board.BoardSize);
-                y = rnd.Next(Board.BoardSize);
-            } while (this.Board[x, y] != Color.Empty);
+            long weight = 0;
+            List<Point> points = new List<Point>();
 
-            this.Board[x, y] = this.Color;
+            for (int x = 0; x < Board.BoardSize; x++)
+            {
+                for (int y = 0; y < Board.BoardSize; y++)
+                {
+                    if (this.Board[x, y] == Color.Empty)
+                    {
+                        var attackLines = this.Board.CheckWin(x, y, this.Color);
+                        var defenceLines = this.Board.CheckWin(x, y, this.NextPlayer.Color);
+
+                        long w = 0;
+                        foreach(var line in attackLines) w += attack[line.Count];
+                        foreach(var line in defenceLines) w += defence[line.Count];
+
+                        if (w >= weight)
+                        {
+                            if (w > weight)
+                            {
+                                points.Clear();
+                                weight = w;
+                            }
+                            points.Add(new Point(x, y));
+                        }
+                    }
+                }
+            }
+
+            Random rnd = new Random();
+        
+            Point p = points[rnd.Next(points.Count)];
+
+            this.Board[p.X, p.Y] = this.Color;
             this.Board.CurrentPlayer = this.NextPlayer;
         }
     }

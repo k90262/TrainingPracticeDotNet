@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Hello;
+
 namespace Gobang
 {
     public partial class Form1 : Form
@@ -38,6 +40,63 @@ namespace Gobang
             p1.NextPlayer = p2;
             p2.NextPlayer = p1;
             board.CurrentPlayer = p1;
+
+
+
+
+        }
+
+        void Test()
+        {
+            int[] data = { 10, 54, 12, 31, 57, 89, 25, 76 };
+
+            List<int> result1 = Filter(data, CheckValue3);
+
+            List<int> result2 = Filter(data, delegate(int no)
+            {
+                return no >= 10 && no <= 50;
+            });
+
+            List<int> result3 = Filter(data, (no) =>
+            {
+                return no >= 10 && no <= 50;
+            });
+
+            List<int> result4 = Filter(data, (no) => no >= 10 && no <= 50);
+
+            List<int> result5 = Filter(data, no => no >= 10 && no <= 50);
+
+            List<int> result6 = data.Filter(no => no >= 10 && no <= 50);
+
+        }
+
+        bool CheckValue1(int no)
+        {
+            return no % 2 == 1;
+        }
+
+        bool CheckValue2(int no)
+        {
+            return no % 2 == 0;
+        }
+
+        bool CheckValue3(int no)
+        {
+            return no >= 10 && no <= 50;
+        }
+
+        List<int> Filter(int[] data, Func<int, bool> f)
+        {
+            List<int> result = new List<int>();
+            foreach(int no in data)
+            {
+                if (f.Invoke(no))
+                {
+                    result.Add(no);
+                }
+            }
+
+            return result;
         }
 
 
@@ -80,17 +139,17 @@ namespace Gobang
                 board[x, y] = board.CurrentPlayer.Color;
                 this.Invalidate(); // send paint event
 
-                finishedLines = board.CheckWin(x, y);
-                if (finishedLines.Count > 0)
+                finishedLines = board.CheckWin(x, y, board[x, y]);
+
+                if (finishedLines.Where(line => line.Count >= 5).Count() > 0)
                 {
                     this.Invalidate();
-                    MessageBox.Show($"Player {board.CurrentPlayer} win !");
+                    MessageBox.Show($"Player {board.CurrentPlayer.Color} win !");
                     //Application.Exit();
                 }
 
                 board.CurrentPlayer = board.CurrentPlayer.NextPlayer;
                 board.CurrentPlayer.Think();
-
             }
         }
 

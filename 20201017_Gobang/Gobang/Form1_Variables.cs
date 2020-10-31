@@ -17,9 +17,13 @@ namespace Gobang
         const int OriginY = 4;
         const int CellSize = 35;
         const int CellPadding = 4;
+
         Board board = new Board();
 
         List<Line> finishedLines = new List<Line>();
+
+
+
 
     }
 }

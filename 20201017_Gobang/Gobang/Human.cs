@@ -6,8 +6,9 @@ namespace Gobang
     {
         public Human(Board board, Color color) : base(board, color)
         {
-            
+
         }
+
         public override void Think()
         {
 
