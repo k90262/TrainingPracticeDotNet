@@ -9,9 +9,18 @@ namespace Gobang
 
         }
 
+        Point p = Point.Empty;
+        
+        public void SetPoint(int x, int y)
+        {
+            p = new Point(x, y);
+        }
+
         public override Point Think()
         {
-            return new Point(0, 0);
+            Point current = p;
+            p = Point.Empty;
+            return current;
         }
     }
 }

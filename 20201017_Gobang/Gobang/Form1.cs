@@ -36,10 +36,10 @@ namespace Gobang
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
             Player p1 = new Computer(board, Color.Black);
-            Player p2 = new Computer(board, Color.White);
+            Player p2 = new Human(board, Color.White);
             p1.NextPlayer = p2;
             p2.NextPlayer = p1;
-            board.CurrentPlayer = p2;
+            board.CurrentPlayer = p1;
 
             // test case 1. -> avoid pc put no-meaning point at left side of line after black player put a point at right side of line. (fixed by concerning space)
             // board[1, 5] = Color.White;
@@ -47,21 +47,25 @@ namespace Gobang
             // board[3, 5] = Color.White;
 
             Timer t = new Timer();
-            t.Tick += (sender, e) => {
+            t.Tick += (sender, e) =>
+            {
                 Point p = board.CurrentPlayer.Think();
-                this.Invalidate();
-
-                finishedLines = board.CheckWin(p.X, p.Y, board[p.X, p.Y]);
-
-                if (finishedLines.Where(line => line.Count >= 5).Count() > 0)
+                if (p != Point.Empty)
                 {
-                    t.Enabled = false;
-                    this.Invalidate();
-                    MessageBox.Show($"Player {board.CurrentPlayer.Color} win !");
-                    Application.Exit();
-                }
+                    this.Invalidate(); // send paint event
 
-                board.CurrentPlayer = board.CurrentPlayer.NextPlayer;
+                    finishedLines = board.CheckWin(p.X, p.Y, board[p.X, p.Y]);
+
+                    if (finishedLines.Where(line => line.Count >= 5).Count() > 0)
+                    {
+                        t.Enabled = false;
+                        this.Invalidate();
+                        MessageBox.Show($"Player {board.CurrentPlayer.Color} win !");
+                        Application.Exit();
+                    }
+
+                    board.CurrentPlayer = board.CurrentPlayer.NextPlayer;
+                }
             };
             t.Interval = 100;
             t.Enabled = true;
@@ -73,7 +77,7 @@ namespace Gobang
 
             List<int> result1 = Filter(data, CheckValue3);
 
-            List<int> result2 = Filter(data, delegate(int no)
+            List<int> result2 = Filter(data, delegate (int no)
             {
                 return no >= 10 && no <= 50;
             });
@@ -109,7 +113,7 @@ namespace Gobang
         List<int> Filter(int[] data, Func<int, bool> f)
         {
             List<int> result = new List<int>();
-            foreach(int no in data)
+            foreach (int no in data)
             {
                 if (f.Invoke(no))
                 {
@@ -158,7 +162,8 @@ namespace Gobang
             if (board.CurrentPlayer is Human && CanPut(e.X, e.Y, out x, out y))
             {
                 board[x, y] = board.CurrentPlayer.Color;
-                this.Invalidate(); // send paint event
+                
+                ((Human)board.CurrentPlayer).SetPoint(x, y);
             }
         }
 

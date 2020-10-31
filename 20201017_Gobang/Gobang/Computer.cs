@@ -83,7 +83,6 @@ namespace Gobang
             }
 
             Random rnd = new Random();
-        
             Point p = points[rnd.Next(points.Count)];
 
             this.Board[p.X, p.Y] = this.Color;
