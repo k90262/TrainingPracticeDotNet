@@ -51,7 +51,7 @@ namespace Gobang
 
         }
 
-        public override void Think()
+        public override Point Think()
         {
             long weight = 0;
             List<Point> points = new List<Point>();
@@ -87,7 +87,8 @@ namespace Gobang
             Point p = points[rnd.Next(points.Count)];
 
             this.Board[p.X, p.Y] = this.Color;
-            this.Board.CurrentPlayer = this.NextPlayer;
+
+            return p;
         }
     }
 }

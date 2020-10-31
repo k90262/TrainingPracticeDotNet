@@ -9,9 +9,9 @@ namespace Gobang
 
         }
 
-        public override void Think()
+        public override Point Think()
         {
-
+            return new Point(0, 0);
         }
     }
 }
