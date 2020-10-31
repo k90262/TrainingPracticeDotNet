@@ -12,9 +12,18 @@ namespace Test1
             // LINQ
             var result =
                 from no in data
+                where no % 2 == 1
+                orderby no descending
                 select no;
 
+            var result2 = data.Where(no => no % 2 == 1).OrderByDescending(no => no);
+
             foreach (var obj in result)
+            {
+                Console.WriteLine(obj);
+            }
+
+            foreach (var obj in result2)
             {
                 Console.WriteLine(obj);
             }
