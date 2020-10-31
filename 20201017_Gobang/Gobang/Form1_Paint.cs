@@ -30,7 +30,7 @@ namespace Gobang
                 }
             }
 
-            foreach(Line line in finishedLines)
+            foreach(Line line in finishedLines.Where(line => line.Count >= 5))
             {
                 int x1 = OriginX + CellSize / 2 + line.X1 * CellSize;   
                 int y1 = OriginY + CellSize / 2 + line.Y1 * CellSize;   
