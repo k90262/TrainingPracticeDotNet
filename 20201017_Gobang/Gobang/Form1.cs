@@ -37,8 +37,10 @@ namespace Gobang
 
             Player p1 = new Computer(board, Color.Black);
             Player p2 = new Computer(board, Color.White);
+            Player p3 = new Computer(board, Color.Blue);
             p1.NextPlayer = p2;
-            p2.NextPlayer = p1;
+            p2.NextPlayer = p3;
+            p3.NextPlayer = p1;
             board.CurrentPlayer = p1;
 
             // test case 1. -> avoid pc put no-meaning point at left side of line after black player put a point at right side of line. (fixed by concerning space)
